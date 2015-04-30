@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f015d6848a3ddcf4d8fcb27cb69334d7
-timeCreated: 1429519743
+timeCreated: 1430364202
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -141,6 +141,20 @@ TextureImporter:
     21300268: Gravity_1
     21300270: Gravity_2
     21300272: Gravity_3
+    21300274: map_player
+    21300276: map_bubble
+    21300278: map_elixir
+    21300280: map_jellybean
+    21300282: map_forcefield
+    21300284: map_teleport
+    21300286: map_earth
+    21300288: map_ffTrigger
+    21300290: map_diamond
+    21300292: map_gravity
+    21300294: map_fire
+    21300296: map_door
+    21300298: map_wall
+    21300300: map_boulder
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1553,6 +1567,146 @@ TextureImporter:
         y: 0
         width: 16
         height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_player
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_bubble
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_elixir
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_jellybean
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_forcefield
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_teleport
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_earth
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_ffTrigger
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_diamond
+      rect:
+        serializedVersion: 2
+        x: 168
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_gravity
+      rect:
+        serializedVersion: 2
+        x: 176
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_fire
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_door
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_wall
+      rect:
+        serializedVersion: 2
+        x: 200
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: map_boulder
+      rect:
+        serializedVersion: 2
+        x: 208
+        y: 0
+        width: 8
+        height: 8
       alignment: 0
       pivot: {x: .5, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
