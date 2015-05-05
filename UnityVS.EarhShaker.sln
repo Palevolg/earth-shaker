@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.EarhShaker.CSharp.Plugins", "UnityVS.EarhShaker.CSharp.Plugins.csproj", "{1C7CDD7B-4E97-405E-20FC-015DF313CE2F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.EarhShaker.CSharp", "UnityVS.EarhShaker.CSharp.csproj", "{3934D6D8-D36A-F6FD-50DA-52DB8370B555}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityVS.EarhShaker.CSharp.Editor", "UnityVS.EarhShaker.CSharp.Editor.csproj", "{29AE04A1-71BC-BB73-7376-C9344C0820EC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C7CDD7B-4E97-405E-20FC-015DF313CE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C7CDD7B-4E97-405E-20FC-015DF313CE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C7CDD7B-4E97-405E-20FC-015DF313CE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C7CDD7B-4E97-405E-20FC-015DF313CE2F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3934D6D8-D36A-F6FD-50DA-52DB8370B555}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3934D6D8-D36A-F6FD-50DA-52DB8370B555}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3934D6D8-D36A-F6FD-50DA-52DB8370B555}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3934D6D8-D36A-F6FD-50DA-52DB8370B555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29AE04A1-71BC-BB73-7376-C9344C0820EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29AE04A1-71BC-BB73-7376-C9344C0820EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29AE04A1-71BC-BB73-7376-C9344C0820EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29AE04A1-71BC-BB73-7376-C9344C0820EC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
