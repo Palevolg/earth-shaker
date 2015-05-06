@@ -20,7 +20,8 @@ public class BoardManager : MonoBehaviour {
 
 	void BoardSetup (int level)
 	{
-		level = lvl;
+		level = lvl-1;
+
 		boardHolder = new GameObject ("Board").transform;
 
 		var N = JSON.Parse(text);
