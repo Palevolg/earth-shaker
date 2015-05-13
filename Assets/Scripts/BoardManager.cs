@@ -20,7 +20,7 @@ public class BoardManager : MonoBehaviour {
 
 	void BoardSetup (int level)
 	{
-		level = lvl-1;
+		level = GameData.level-1;
 
 		boardHolder = new GameObject ("Board").transform;
 
