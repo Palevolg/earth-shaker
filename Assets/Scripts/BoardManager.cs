@@ -31,8 +31,8 @@ public class BoardManager : MonoBehaviour {
 		string wallSprite = "Wall_"+N["levels"][level]["itemSprites"]["wall"];
 		string earthSprite = "Earth_"+N["levels"][level]["itemSprites"]["earth"];
 
-		Debug.Log ("LEVEL "+(level+1)+": "+N["levels"][level]["title"]);
-		Debug.Log (doorSprite+"; "+boulderSprite+"; "+wallSprite+"; "+earthSprite+".");
+		//Debug.Log ("LEVEL "+(level+1)+": "+N["levels"][level]["title"]);
+		//Debug.Log (doorSprite+"; "+boulderSprite+"; "+wallSprite+"; "+earthSprite+".");
 
 		for(a = 0; a < rows; a++)	{
 			y = rows-a-1;
