@@ -8,6 +8,7 @@ public class BoardManager : MonoBehaviour {
 	public int rows = 20;
 	public int cols = 30;
 	public int lvl;
+	public GameObject player;
 
 	private Transform boardHolder;
 
@@ -19,8 +20,10 @@ public class BoardManager : MonoBehaviour {
 
 
 	void BoardSetup (int level)
-	{
-		level = GameData.level-1;
+	{	
+		level = GameData.level - 1;
+
+		//level = 1;
 
 		boardHolder = new GameObject ("Board").transform;
 
@@ -44,14 +47,16 @@ public class BoardManager : MonoBehaviour {
 					}break;
 					case "1": {
 						// door
-					levelMap[x,y] = Instantiate (Resources.Load(doorSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						levelMap[x,y] = Instantiate (Resources.Load(doorSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 					}break;
 					case "2": {
 						// boulder
-					levelMap[x,y] = Instantiate (Resources.Load(boulderSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						levelMap[x,y] = Instantiate (Resources.Load(boulderSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 					}break;
 					case "3": {/* player */}break;
-					case "4": {/* player */}break;
+					case "4": {
+						
+					}break;
 					case "5": {
 						// wall
 					levelMap[x,y] = Instantiate (Resources.Load(wallSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
@@ -99,7 +104,10 @@ public class BoardManager : MonoBehaviour {
 				}
 				if (levelMap[x,y]!=null) levelMap[x,y].transform.SetParent (boardHolder);
 			}
-		}
+		} // for
+		x = N["levels"][level]["player"]["x"].AsInt - 1;
+		y = 20 - N ["levels"] [level] ["player"] ["y"].AsInt;
+		player.transform.position = new Vector3(x,y,0);
 	}
 
 	public void SetupScene (int level) {
