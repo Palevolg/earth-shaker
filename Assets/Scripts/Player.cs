@@ -5,45 +5,37 @@ public class Player : MonoBehaviour {
 
 	public GameObject player;
 	private Vector2 pos;
+
+	private float checkTime;
+	private float lastTime;
+
+	private Vector2 moveAttempt;
+
 	public void placeToXY (int x, int y) {
 
 	}
 
 	// Use this for initialization
 	void Start () {
+
+		lastTime = Time.time;
+		checkTime = lastTime + GameData.tact;
+
+		moveAttempt = new Vector2 (0f, 0f);
 	
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		pos = transform.position;
-		
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			//RaycastHit2D hit;
-			//Vector2 start = pos;
-			//Vector2 end = start + new Vector2(pos.x + 1, pos.y);
-			//hit = Physics2D.Linecast(start, end);
-			//Debug.Log(hit.collider);
-			//if (hit.transform == null){ 
-				pos.x += 1;
-				transform.position = pos;
-			//}
-			
-		}
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-			pos.x -= 1;
-			transform.position = pos; 		
-			
-		}
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			pos.y += 1;
-			transform.position = pos; 		
-			
-		}
-		if (Input.GetKey (KeyCode.DownArrow)) {
-			pos.y -= 1;
-			transform.position = pos; 		
-			
+
+		moveAttempt.x += Input.GetAxisRaw ("Horizontal");
+		moveAttempt.y += Input.GetAxisRaw ("Vertical");
+
+
+		lastTime = Time.time;
+		if (lastTime >= checkTime) {
+			UpdatePerTact();
+			checkTime = Time.time + GameData.tact;
 		}
 		
 
@@ -58,5 +50,33 @@ public class Player : MonoBehaviour {
 			Destroy(ground.gameObject); 
 			
 		}
+	}
+	void UpdatePerTact () {
+		// player move
+		if (moveAttempt.x > 0) {
+			moveAttempt.x = 1;
+			moveAttempt.y =0;
+		}
+		if (moveAttempt.x < 0) {
+			moveAttempt.x = -1;
+			moveAttempt.y =0;
+		}
+		if (moveAttempt.y>0) {
+			moveAttempt.y = 1;
+		}
+		if (moveAttempt.y<0) {
+			moveAttempt.y = -1;
+		}
+
+		pos = transform.position;
+		pos.x += moveAttempt.x;
+		pos.y += moveAttempt.y;
+		transform.position = pos;
+
+		moveAttempt.x = 0;
+		moveAttempt.y = 0;
+
+		// check falling objects
+
 	}
 }

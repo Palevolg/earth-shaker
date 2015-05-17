@@ -23,7 +23,7 @@ public class BoardManager : MonoBehaviour {
 	{	
 		level = GameData.level - 1;
 
-		//level = 1;
+		level = 1; //todo remove;
 
 		boardHolder = new GameObject ("Board").transform;
 
