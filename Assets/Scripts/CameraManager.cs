@@ -3,7 +3,6 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour {
 
-	public GameObject cameraInstance;
 	public GameObject player;
 
 	private float x,y;
@@ -17,7 +16,7 @@ public class CameraManager : MonoBehaviour {
 		if (x > 21.5f) {x = 21.5f;}
 		if (y < 4.5f) {y = 4.5f;}
 		if (y > 13.5f) {y = 13.5f;};
-		cameraInstance.transform.position = new Vector3 (x, y, -10f);
+		transform.position = new Vector3 (x, y, -10f);
 
 	}
 	// Use this for initialization
@@ -27,6 +26,6 @@ public class CameraManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		FollowPlayer (); //todo: Optimize. call only with moves, teleports, etc.
+
 	}
 }

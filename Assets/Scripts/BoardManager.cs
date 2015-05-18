@@ -110,6 +110,19 @@ public class BoardManager : MonoBehaviour {
 		player.transform.position = new Vector3(x,y,0);
 	}
 
+	public string getTagXY(int x, int y) {
+		if (levelMap [x, y] != null) {
+			return levelMap [x, y].tag;
+		} else {
+			return null;
+		}
+	}
+
+	public void destroyXY(int x, int y) {
+		if (levelMap [x, y] != null)
+			Destroy (levelMap [x, y]);
+	}
+
 	public void SetupScene (int level) {
 		BoardSetup (level);
 	}
