@@ -107,12 +107,30 @@ public class Player : MonoBehaviour {
 			string otherTag = boardManager.getTagXY (X,Y);
 			
 			switch (otherTag) {
+			case "boulder":{
+				int A = X+(int)moveAttempt.x;
+				int B = Y;//+(int)moveAttempt.y;
+				if (boardManager.getTagXY(A,B)==null){
+					boardManager.moveXYtoAB(X,Y,A,B);
+				}
+				else {
+					pos = transform.position;
+				}
+				break;
+			}
+			case "jellybean":{
+				break;
+			}
 			case "earth": {
 				boardManager.destroyXY(X,Y);
 				break;
 			}
 			case "diamond":{
 				boardManager.destroyXY(X,Y);
+				break;
+			}
+			case "wall":{
+				pos = transform.position;
 				break;
 			}
 			}

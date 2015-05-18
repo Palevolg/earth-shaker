@@ -123,6 +123,13 @@ public class BoardManager : MonoBehaviour {
 			Destroy (levelMap [x, y]);
 	}
 
+	public void moveXYtoAB(int X, int Y, int A, int B) {
+		//move object from XY to AB
+		levelMap [A, B] = levelMap [X, Y];
+		levelMap [X, Y] = null;
+		levelMap [A, B].transform.position = new Vector3 (A, B, 0f);
+	}
+
 	public void SetupScene (int level) {
 		BoardSetup (level);
 	}
