@@ -4,6 +4,7 @@ using System.Collections;
 public class Player : MonoBehaviour {
 
 	public GameObject player;
+	public BoardManager boardManager;
 	private Vector2 pos;
 
 	private float checkTime;
@@ -44,15 +45,15 @@ public class Player : MonoBehaviour {
 	{
 		// Is this a shot?
 		//GroundScript ground = otherCollider.gameObject.GetComponent<GroundScript>();
-		GameObject otherObject = otherCollider.gameObject;
-		string tag = otherObject.tag;
+		/*GameObject otherObject = otherCollider.gameObject;
+		string tag = otherObject.tag;*/
 		/*if (ground != null)
 		{
 			// Destroy the ground
 			Destroy(ground.gameObject); 
 			
 		}*/
-		switch (tag) {
+		/*switch (tag) {
 		case "earth": {
 			Destroy(otherObject);
 			break;
@@ -61,7 +62,7 @@ public class Player : MonoBehaviour {
 			Destroy(otherObject);
 			break;
 		}
-		}
+		}*/
 	}
 	void UpdatePerTact () {
 		// player move
@@ -80,13 +81,40 @@ public class Player : MonoBehaviour {
 			moveAttempt.y = -1;
 		}
 
-		pos = transform.position;
-		pos.x += moveAttempt.x;
-		pos.y += moveAttempt.y;
-		transform.position = pos;
+		if (moveAttempt.x != 0 || moveAttempt.y != 0) {
+			//try to move
+			pos = transform.position;
+			pos.x += moveAttempt.x;
+			pos.y += moveAttempt.y;
+			if (pos.x < 0) {
+				pos.x = 0;
+			}
+			if (pos.x>29) {
+				pos.x = 29;
+			}
+			if (pos.y < 0) {
+				pos.y=0;
+			}
+			if (pos.y>19) {
+				pos.y = 19;
+			}
 
-		moveAttempt.x = 0;
-		moveAttempt.y = 0;
+			int X = (int) Mathf.Round(pos.x);
+			int Y = (int) Mathf.Round(pos.y);
+
+			string otherTag = boardManager.getTagXY (X,Y);
+			
+			switch (otherTag) {
+			case "earth": {
+				boardManager.destroyXY(X,Y);
+				break;
+			}
+			}
+			transform.position = pos;
+
+			moveAttempt.x = 0;
+			moveAttempt.y = 0;
+		} 
 
 		// check falling objects
 
