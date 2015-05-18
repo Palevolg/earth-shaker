@@ -43,12 +43,24 @@ public class Player : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D otherCollider)
 	{
 		// Is this a shot?
-		GroundScript ground = otherCollider.gameObject.GetComponent<GroundScript>();
-		if (ground != null)
+		//GroundScript ground = otherCollider.gameObject.GetComponent<GroundScript>();
+		GameObject otherObject = otherCollider.gameObject;
+		string tag = otherObject.tag;
+		/*if (ground != null)
 		{
 			// Destroy the ground
 			Destroy(ground.gameObject); 
 			
+		}*/
+		switch (tag) {
+		case "earth": {
+			Destroy(otherObject);
+			break;
+		}
+		case "diamond": {
+			Destroy(otherObject);
+			break;
+		}
 		}
 	}
 	void UpdatePerTact () {
