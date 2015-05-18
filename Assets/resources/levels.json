@@ -2,7 +2,7 @@
   {
     "title": "ROOM FOR IMPROVEMENT",
     "settings": {
-      "diamodsRequired": 36,
+      "diamondsRequired": 36,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -41,7 +41,7 @@
   {
     "title": "THE BUBBLE BATH",
     "settings": {
-      "diamodsRequired": 48,
+      "diamondsRequired": 48,
       "pointsPerDiamond": 15
     },
     "player": {
@@ -80,7 +80,7 @@
   {
     "title": "THE GRAVITY CHAMBER",
     "settings": {
-      "diamodsRequired": 45,
+      "diamondsRequired": 45,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -119,7 +119,7 @@
   {
     "title": "HEAD IN THE CLOUDS",
     "settings": {
-      "diamodsRequired": 33,
+      "diamondsRequired": 33,
       "pointsPerDiamond": 33
     },
     "player": {
@@ -158,7 +158,7 @@
   {
     "title": "HUSH TOED ICELAND",
     "settings": {
-      "diamodsRequired": 80,
+      "diamondsRequired": 80,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -197,7 +197,7 @@
   {
     "title": "DIAMONDS OF MINE",
     "settings": {
-      "diamodsRequired": 51,
+      "diamondsRequired": 51,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -236,7 +236,7 @@
   {
     "title": "THE TWO OF HEARTS",
     "settings": {
-      "diamodsRequired": 50,
+      "diamondsRequired": 50,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -275,7 +275,7 @@
   {
     "title": "CENTRAL INCINERATOR",
     "settings": {
-      "diamodsRequired": 43,
+      "diamondsRequired": 43,
       "pointsPerDiamond": 5
     },
     "player": {
@@ -314,7 +314,7 @@
   {
     "title": "INTERNAL REACTOR INC",
     "settings": {
-      "diamodsRequired": 61,
+      "diamondsRequired": 61,
       "pointsPerDiamond": 4
     },
     "player": {
@@ -353,7 +353,7 @@
   {
     "title": "NUCLEAR ORE CAVERNS",
     "settings": {
-      "diamodsRequired": 30,
+      "diamondsRequired": 30,
       "pointsPerDiamond": 21
     },
     "player": {
@@ -392,7 +392,7 @@
   {
     "title": "GRAVITON SHELLS",
     "settings": {
-      "diamodsRequired": 24,
+      "diamondsRequired": 24,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -431,7 +431,7 @@
   {
     "title": "THE OIL WELLS",
     "settings": {
-      "diamodsRequired": 63,
+      "diamondsRequired": 63,
       "pointsPerDiamond": 5
     },
     "player": {
@@ -470,7 +470,7 @@
   {
     "title": "WET HELL SOIL",
     "settings": {
-      "diamodsRequired": 27,
+      "diamondsRequired": 27,
       "pointsPerDiamond": 25
     },
     "player": {
@@ -509,7 +509,7 @@
   {
     "title": "THE GRAVLOCK CELL",
     "settings": {
-      "diamodsRequired": 25,
+      "diamondsRequired": 25,
       "pointsPerDiamond": 17
     },
     "player": {
@@ -548,7 +548,7 @@
   {
     "title": "HONEYCOMBS",
     "settings": {
-      "diamodsRequired": 71,
+      "diamondsRequired": 71,
       "pointsPerDiamond": 3
     },
     "player": {
@@ -587,7 +587,7 @@
   {
     "title": "HAIR BRAINED SURGERY",
     "settings": {
-      "diamodsRequired": 49,
+      "diamondsRequired": 49,
       "pointsPerDiamond": 27
     },
     "player": {
@@ -626,7 +626,7 @@
   {
     "title": "BURY DRAINAGE HIRERS",
     "settings": {
-      "diamodsRequired": 44,
+      "diamondsRequired": 44,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -665,7 +665,7 @@
   {
     "title": "SPACEBASE WASTEPIPES",
     "settings": {
-      "diamodsRequired": 73,
+      "diamondsRequired": 73,
       "pointsPerDiamond": 30
     },
     "player": {
@@ -704,7 +704,7 @@
   {
     "title": "THE SNARE",
     "settings": {
-      "diamodsRequired": 71,
+      "diamondsRequired": 71,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -743,7 +743,7 @@
   {
     "title": "RUSE NO DOUBT",
     "settings": {
-      "diamodsRequired": 68,
+      "diamondsRequired": 68,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -782,7 +782,7 @@
   {
     "title": "OUTER BOUNDS",
     "settings": {
-      "diamodsRequired": 99,
+      "diamondsRequired": 99,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -821,7 +821,7 @@
   {
     "title": "SPRING LODED",
     "settings": {
-      "diamodsRequired": 38,
+      "diamondsRequired": 38,
       "pointsPerDiamond": 7
     },
     "player": {
@@ -860,7 +860,7 @@
   {
     "title": "ALARM CLOCK WORKS",
     "settings": {
-      "diamodsRequired": 49,
+      "diamondsRequired": 49,
       "pointsPerDiamond": 20
     },
     "player": {
@@ -899,7 +899,7 @@
   {
     "title": "FOG RISE WATERFALL",
     "settings": {
-      "diamodsRequired": 47,
+      "diamondsRequired": 47,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -938,7 +938,7 @@
   {
     "title": "GREAT WALLS OF FIRE",
     "settings": {
-      "diamodsRequired": 76,
+      "diamondsRequired": 76,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -977,7 +977,7 @@
   {
     "title": "CHINA CANAL",
     "settings": {
-      "diamodsRequired": 88,
+      "diamondsRequired": 88,
       "pointsPerDiamond": 50
     },
     "player": {
@@ -1016,7 +1016,7 @@
   {
     "title": "THE COMBINATION LOCK",
     "settings": {
-      "diamodsRequired": 49,
+      "diamondsRequired": 49,
       "pointsPerDiamond": 13
     },
     "player": {
@@ -1055,7 +1055,7 @@
   {
     "title": "YOUR SAFE WITH ME",
     "settings": {
-      "diamodsRequired": 39,
+      "diamondsRequired": 39,
       "pointsPerDiamond": 25
     },
     "player": {
@@ -1094,7 +1094,7 @@
   {
     "title": "YE FIT WARM HOUSE",
     "settings": {
-      "diamodsRequired": 67,
+      "diamondsRequired": 67,
       "pointsPerDiamond": 12
     },
     "player": {
@@ -1133,7 +1133,7 @@
   {
     "title": "THE KEEP",
     "settings": {
-      "diamodsRequired": 99,
+      "diamondsRequired": 99,
       "pointsPerDiamond": 10
     },
     "player": {
@@ -1172,7 +1172,7 @@
   {
     "title": "FOR GOODNESS SAKE",
     "settings": {
-      "diamodsRequired": 30,
+      "diamondsRequired": 30,
       "pointsPerDiamond": 25
     },
     "player": {
@@ -1211,7 +1211,7 @@
   {
     "title": "NO DEVIL LIVED ON",
     "settings": {
-      "diamodsRequired": 16,
+      "diamondsRequired": 16,
       "pointsPerDiamond": 250
     },
     "player": {
@@ -1247,4 +1247,84 @@
       ["1","f","6","6","6","6","5","8","8","b","5","d","8","d","5","5","d","5","5","5","f","5","5","6","5","5","5","5","5","5"]
     ]
   }
-]}
+],
+
+  "itemsprop":
+  {
+    "door":{
+      "gResponds":"no",
+      "fallOff":"yes",
+      "playerKiller":"no"
+    },
+    "boulder":{
+      "gResponds":"yes",
+      "fallOff":"yes",
+      "playerKiller":"yes"
+    },
+    "player":{
+      "gResponds":"no",
+      "fallOff":"no",
+      "playerKiller":"no"
+    },
+    "wall":{
+      "gResponds":"no",
+      "fallOff":"yes",
+      "playerKiller":"no"
+    },
+    "earth":{
+      "gResponds":"no",
+      "fallOff":"no",
+      "playerKiller":"no"
+    },
+    "wethellsoil":{
+      "gResponds":"yes",
+      "fallOff":"no",
+      "playerKiller":"no"
+    },
+    "diamond":{
+      "gResponds":"yes",
+      "fallOff":"yes",
+      "playerKiller":"yes"
+    },
+    "jellybean":{
+      "gResponds":"yes",
+      "fallOff":"yes",
+      "playerKiller":"yes"
+    },
+    "forcefield":{
+      "gResponds":"no",
+      "fallOff":"yes",
+      "playerKiller":"no"
+    },
+    "gravity":{
+      "gResponds":"yes",
+      "fallOff":"yes",
+      "playerKiller":"yes"
+    },
+    "trigger":{
+      "gResponds":"no",
+      "fallOff":"yes",
+      "playerKiller":"no"
+    },
+    "elixir":{
+      "gResponds":"yes",
+      "fallOff":"yes",
+      "playerKiller":"yes"
+    },
+    "teleport":{
+      "gResponds":"no",
+      "fallOff":"yes",
+      "playerKiller":"no"
+    },
+    "bubble":{
+      "gResponds":"no",
+      "fallOff":"yes",
+      "playerKiller":"no"
+    },
+    "fire":{
+      "gResponds":"yes",
+      "fallOff":"yes",
+      "playerKiller":"yes"
+    }
+  }
+}

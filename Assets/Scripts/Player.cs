@@ -105,7 +105,7 @@ public class Player : MonoBehaviour {
 			int Y = (int) Mathf.Round(pos.y);
 
 			string otherTag = boardManager.getTagXY (X,Y);
-			
+
 			switch (otherTag) {
 			case "door":{break;}
 			case "boulder":{
@@ -196,6 +196,19 @@ public class Player : MonoBehaviour {
 		} 
 
 		// check falling objects
+		ProcessMap ();
+	}
 
+	private void ProcessMap() {
+		int x, y, b;
+		for (y = 0; y<19; y++) {
+			b=y+1; //cell above curent cell
+			for (x=0; x<30; x++) {
+				if (boardManager.getTagXY(x,y) == null) {		//if current cell is empty
+					string tag = boardManager.getTagXY(x,b);   //and item above is gravity responds
+					if (boardManager.getPropByTag(tag,"gResponds")=="yes") {boardManager.moveXYtoAB(x,y+1,x,y);}
+				}
+			}
+		}
 	}
 }

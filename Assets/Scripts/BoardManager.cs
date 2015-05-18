@@ -14,10 +14,11 @@ public class BoardManager : MonoBehaviour {
 
 	private GameObject [,] levelMap = new GameObject[30,20];
 
-	private string text = System.IO.File.ReadAllText("Assets/resources/levels.json");
+	private string text;
 
 	private object tempObj;
 
+	private JSONNode N;
 
 	void BoardSetup (int level)
 	{	
@@ -27,7 +28,6 @@ public class BoardManager : MonoBehaviour {
 
 		boardHolder = new GameObject ("Board").transform;
 
-		var N = JSON.Parse(text);
 		int a, x, y;
 		string doorSprite = "Door_"+N["levels"][level]["itemSprites"]["door"];
 		string boulderSprite = "Boulder_"+N["levels"][level]["itemSprites"]["boulder"];
@@ -110,6 +110,15 @@ public class BoardManager : MonoBehaviour {
 		player.transform.position = new Vector3(x,y,0);
 	}
 
+	public string getPropByTag(string tag, string prop) {
+		string buf;
+		if (tag != null) {
+			buf = N ["itemsprop"][tag][prop];
+		} else
+			buf = null;
+		return buf;
+	}
+
 	public string getTagXY(int x, int y) {
 		if (levelMap [x, y] != null) {
 			return levelMap [x, y].tag;
@@ -136,6 +145,8 @@ public class BoardManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		text = System.IO.File.ReadAllText("Assets/resources/levels.json");
+		N = JSON.Parse(text);
 		SetupScene (0);
 	}
 	
