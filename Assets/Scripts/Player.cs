@@ -107,9 +107,14 @@ public class Player : MonoBehaviour {
 			string otherTag = boardManager.getTagXY (X,Y);
 			
 			switch (otherTag) {
+			case "door":{break;}
 			case "boulder":{
 				int A = X+(int)moveAttempt.x;
 				int B = Y;//+(int)moveAttempt.y;
+				if (A<0 || A>29) {
+					pos = transform.position;
+					break;
+				}
 				if (boardManager.getTagXY(A,B)==null){
 					boardManager.moveXYtoAB(X,Y,A,B);
 				}
@@ -119,6 +124,26 @@ public class Player : MonoBehaviour {
 				break;
 			}
 			case "jellybean":{
+				boardManager.destroyXY(X,Y);
+				break;
+			}
+			case "forcefield":{
+				pos = transform.position;
+				break;
+			}
+			case "trigger":{
+				pos = transform.position;
+				break;
+			}
+			case "gravity": {
+				boardManager.destroyXY(X,Y);
+				break;
+			}
+			case "elixir": {
+				boardManager.destroyXY(X,Y);
+				break;
+			}
+			case "teleport": {
 				break;
 			}
 			case "earth": {
@@ -131,6 +156,35 @@ public class Player : MonoBehaviour {
 			}
 			case "wall":{
 				pos = transform.position;
+				break;
+			}
+			case "bubble":{
+				int A = X+(int)moveAttempt.x;
+				int B = Y+(int)moveAttempt.y;
+				if (A<0 || A>29 || B<0 || B>19) {
+					pos = transform.position;
+					break;
+				}
+				switch (boardManager.getTagXY(A,B)) {
+				case "earth": {
+					boardManager.destroyXY(A,B);
+					boardManager.moveXYtoAB(X,Y,A,B);
+					break;
+				}
+				case "fire": {
+					boardManager.destroyXY(A,B);
+					boardManager.destroyXY(X,Y);
+					break;
+				}
+				case null: {
+					boardManager.moveXYtoAB(X,Y,A,B);
+					break;
+				}
+				default: {
+					pos = transform.position;
+					break;
+				}
+				}
 				break;
 			}
 			}
