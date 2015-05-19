@@ -9,6 +9,7 @@ public class BoardManager : MonoBehaviour {
 	public int cols = 30;
 	public int lvl;
 	public GameObject player;
+	public CameraManager cameraManager;
 
 	private Transform boardHolder;
 
@@ -108,6 +109,7 @@ public class BoardManager : MonoBehaviour {
 		x = N["levels"][level]["player"]["x"].AsInt - 1;
 		y = 20 - N ["levels"] [level] ["player"] ["y"].AsInt;
 		player.transform.position = new Vector3(x,y,0);
+		cameraManager.FollowPlayer ();
 	}
 
 	public string getPropByTag(string tag, string prop) {
