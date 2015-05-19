@@ -178,14 +178,32 @@ public class Player : MonoBehaviour {
 
 	private void ProcessMap() {
 		int x, y, b;
-		for (y = 0; y<19; y++) {
-			b=y+1; //cell above curent cell
+		string tag;
+		for (y = 1; y<20; y++) {
+			b = y-1;
 			for (x=0; x<30; x++) {
-				if (boardManager.getTagXY(x,y) == null && (pos.x != x || pos.y !=y)){		//if current cell is empty and no player here
-					string tag = boardManager.getTagXY(x,b);   //and item above is gravity responds
-					if (boardManager.getPropByTag(tag,"gResponds")=="yes") {boardManager.moveXYtoAB(x,y+1,x,y);}
+				tag = boardManager.getTagXY(x,y);
+				if (boardManager.getPropByTag(tag,"gResponds")=="yes") {
+					if (boardManager.getTagXY(x,b)==null) {
+						boardManager.moveXYtoAB(x,y,x,b);
+					}
+					else if (boardManager.getPropByTag(boardManager.getTagXY(x,b),"fallOff")=="yes") {
+						if (x>0 && boardManager.getTagXY(x-1,b)==null) {
+							boardManager.PushAsBoulder(x,y,x-1,y);
+						}
+						else if (x<29 && boardManager.getTagXY(x+1,b)==null) {
+							boardManager.PushAsBoulder(x,y,x+1,y);
+							x++;
+						}
+					}
 				}
 			}
 		}
 	}
 }
+
+/*
+if (boardManager.getTagXY(x,y) == null && (pos.x != x || pos.y !=y)){		//if current cell is empty and no player here
+					string tag = boardManager.getTagXY(x,b);   //and item above is gravity responds
+					if (boardManager.getPropByTag(tag,"gResponds")=="yes") {boardManager.moveXYtoAB(x,y+1,x,y);}
+*/

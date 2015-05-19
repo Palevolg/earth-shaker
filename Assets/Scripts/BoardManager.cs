@@ -119,6 +119,9 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public string getTagXY(int x, int y) {
+		if (x == player.transform.position.x && y == player.transform.position.y) {
+			return "player";
+		}
 		if (levelMap [x, y] != null) {
 			return levelMap [x, y].tag;
 		} else {
