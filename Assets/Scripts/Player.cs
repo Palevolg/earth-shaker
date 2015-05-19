@@ -67,6 +67,7 @@ public class Player : MonoBehaviour {
 		}*/
 	}
 	void UpdatePerTact () {
+		pos = transform.position;
 		// player move
 		if (moveAttempt.x > 0) {
 			moveAttempt.x = 1;
@@ -85,7 +86,6 @@ public class Player : MonoBehaviour {
 
 		if (moveAttempt.x != 0 || moveAttempt.y != 0) {
 			//try to move
-			pos = transform.position;
 			pos.x += moveAttempt.x;
 			pos.y += moveAttempt.y;
 			if (pos.x < 0) {
@@ -181,7 +181,7 @@ public class Player : MonoBehaviour {
 		for (y = 0; y<19; y++) {
 			b=y+1; //cell above curent cell
 			for (x=0; x<30; x++) {
-				if (boardManager.getTagXY(x,y) == null && (pos.x != x || pos.y !=y)){		//if current cell is empty
+				if (boardManager.getTagXY(x,y) == null && (pos.x != x || pos.y !=y)){		//if current cell is empty and no player here
 					string tag = boardManager.getTagXY(x,b);   //and item above is gravity responds
 					if (boardManager.getPropByTag(tag,"gResponds")=="yes") {boardManager.moveXYtoAB(x,y+1,x,y);}
 				}
