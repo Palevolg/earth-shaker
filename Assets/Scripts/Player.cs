@@ -164,6 +164,7 @@ public class Player : MonoBehaviour {
 				break;
 			}
 			}
+			if (Input.GetKey(KeyCode.Space)) {pos=transform.position;}
 			transform.position = pos;
 			cameraManager.FollowPlayer();
 
