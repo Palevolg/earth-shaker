@@ -111,14 +111,7 @@ public class Player : MonoBehaviour {
 			case "boulder":{
 				int A = X+(int)moveAttempt.x;
 				int B = Y;//+(int)moveAttempt.y;
-				if (A<0 || A>29) {
-					pos = transform.position;
-					break;
-				}
-				if (boardManager.getTagXY(A,B)==null){
-					boardManager.moveXYtoAB(X,Y,A,B);
-				}
-				else {
+				if (!boardManager.PushAsBoulder(X,Y,A,B)) {
 					pos = transform.position;
 				}
 				break;
@@ -161,30 +154,13 @@ public class Player : MonoBehaviour {
 			case "bubble":{
 				int A = X+(int)moveAttempt.x;
 				int B = Y+(int)moveAttempt.y;
-				if (A<0 || A>29 || B<0 || B>19) {
-					pos = transform.position;
-					break;
+				if (!boardManager.PushAsBubble(X,Y,A,B)) { //can we push the bubble from XY to AB ?
+					pos = transform.position;  //if can't - don't move
 				}
-				switch (boardManager.getTagXY(A,B)) {
-				case "earth": {
-					boardManager.destroyXY(A,B);
-					boardManager.moveXYtoAB(X,Y,A,B);
-					break;
-				}
-				case "fire": {
-					boardManager.destroyXY(A,B);
-					boardManager.destroyXY(X,Y);
-					break;
-				}
-				case null: {
-					boardManager.moveXYtoAB(X,Y,A,B);
-					break;
-				}
-				default: {
-					pos = transform.position;
-					break;
-				}
-				}
+				break;
+			}
+			case "fire":{
+				//todo death
 				break;
 			}
 			}

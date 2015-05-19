@@ -25,7 +25,7 @@ public class BoardManager : MonoBehaviour {
 	{	
 		level = GameData.level - 1;
 
-		level = 0; //todo remove;
+		if (GameData.level==0) level = 0; //todo remove;
 
 		boardHolder = new GameObject ("Board").transform;
 
@@ -34,9 +34,6 @@ public class BoardManager : MonoBehaviour {
 		string boulderSprite = "Boulder_"+N["levels"][level]["itemSprites"]["boulder"];
 		string wallSprite = "Wall_"+N["levels"][level]["itemSprites"]["wall"];
 		string earthSprite = "Earth_"+N["levels"][level]["itemSprites"]["earth"];
-
-		//Debug.Log ("LEVEL "+(level+1)+": "+N["levels"][level]["title"]);
-		//Debug.Log (doorSprite+"; "+boulderSprite+"; "+wallSprite+"; "+earthSprite+".");
 
 		for(a = 0; a < rows; a++)	{
 			y = rows-a-1;
@@ -139,6 +136,43 @@ public class BoardManager : MonoBehaviour {
 		levelMap [A, B] = levelMap [X, Y];
 		levelMap [X, Y] = null;
 		levelMap [A, B].transform.position = new Vector3 (A, B, 0f);
+	}
+
+	public bool PushAsBubble(int X, int Y, int A, int B) {
+		if (A < 0 || A > 29 || B < 0 || B > 19) {
+			return false;
+		}
+		switch (getTagXY (A, B)) {
+		case "earth":
+			{
+				destroyXY (A, B);
+				moveXYtoAB (X, Y, A, B);
+				return true;
+			}
+		case "fire":
+			{
+				destroyXY (A, B);
+				destroyXY (X, Y);
+			return true;
+			}
+		case null:
+			{
+				moveXYtoAB (X, Y, A, B);
+			return true;
+			}
+		}
+		return false;
+	}
+
+	public bool PushAsBoulder(int X, int Y, int A, int B) {
+		if (A<0 || A>29) {
+			return false;
+		}
+		if (getTagXY(A,B)==null){
+			moveXYtoAB(X,Y,A,B);
+			return true;
+		}
+		return false;
 	}
 
 	public void SetupScene (int level) {
