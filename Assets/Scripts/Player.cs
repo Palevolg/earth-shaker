@@ -193,7 +193,6 @@ public class Player : MonoBehaviour {
 						}
 						else if (x<29 && boardManager.getTagXY(x+1,b)==null) {
 							boardManager.PushAsBoulder(x,y,x+1,y);
-							x++;
 						}
 					}
 				}
