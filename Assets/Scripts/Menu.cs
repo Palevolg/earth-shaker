@@ -10,10 +10,19 @@ public class Menu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetKey(KeyCode.Alpha1)) {
+			Invoke("GoToLevelSelector", 0.0f);
+		}
+		if (Input.GetKey(KeyCode.Alpha3)) {
+			Application.Quit ();
+		}
+
 	}
+
 
 	public void GoToLevelSelector() {
 		Application.LoadLevel ("levelSelector");
 	}
+
+
 }
