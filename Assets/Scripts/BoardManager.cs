@@ -196,8 +196,12 @@ public class BoardManager : MonoBehaviour {
 				if (getPropByTag(tag,"gResponds")=="yes") {
 
 					if (getTagXY(x,b)==null) {
-						if (GetAttrXY(x,y)) {moveXYtoAB(x,y,x,b);}
-						else { SetAttrXY(x,y,true);}
+						if (GetAttrXY(x,y)) {
+							moveXYtoAB(x,y,x,b);
+						}
+						else {
+							SetAttrXY(x,y,true);
+						}
 					}
 
 					else if (getPropByTag(getTagXY(x,b),"fallOff")=="yes") {
@@ -206,7 +210,11 @@ public class BoardManager : MonoBehaviour {
 						}
 						else if (x<29 && getTagXY(x+1,b)==null) {
 							PushAsBoulder(x,y,x+1,y);
+							x++;
 						}
+					}
+					else {
+						SetAttrXY(x,y,false);
 					}
 				}
 			}
