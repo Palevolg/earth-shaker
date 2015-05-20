@@ -205,10 +205,10 @@ public class BoardManager : MonoBehaviour {
 					}
 
 					else if (getPropByTag(getTagXY(x,b),"fallOff")=="yes") {
-						if (x>0 && getTagXY(x-1,b)==null) {
+						if (x>0 && getTagXY(x-1,b)==null && getTagXY(x-1,y)==null) {
 							PushAsBoulder(x,y,x-1,y);
 						}
-						else if (x<29 && getTagXY(x+1,b)==null) {
+						if (x<29 && getTagXY(x+1,b)==null && getTagXY (x+1,y)==null) {
 							PushAsBoulder(x,y,x+1,y);
 							x++;
 						}
