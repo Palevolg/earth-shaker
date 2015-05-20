@@ -170,35 +170,13 @@ public class Player : MonoBehaviour {
 
 			moveAttempt.x = 0;
 			moveAttempt.y = 0;
+
 		} 
 
 		// check falling objects
-		ProcessMap ();
+		boardManager.ProcessMap ();
 	}
 
-	private void ProcessMap() {
-		int x, y, b;
-		string tag;
-		for (y = 1; y<20; y++) {
-			b = y-1;
-			for (x=0; x<30; x++) {
-				tag = boardManager.getTagXY(x,y);
-				if (boardManager.getPropByTag(tag,"gResponds")=="yes") {
-					if (boardManager.getTagXY(x,b)==null) {
-						boardManager.moveXYtoAB(x,y,x,b);
-					}
-					else if (boardManager.getPropByTag(boardManager.getTagXY(x,b),"fallOff")=="yes") {
-						if (x>0 && boardManager.getTagXY(x-1,b)==null) {
-							boardManager.PushAsBoulder(x,y,x-1,y);
-						}
-						else if (x<29 && boardManager.getTagXY(x+1,b)==null) {
-							boardManager.PushAsBoulder(x,y,x+1,y);
-						}
-					}
-				}
-			}
-		}
-	}
 }
 
 /*

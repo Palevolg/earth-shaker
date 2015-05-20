@@ -109,6 +109,14 @@ public class BoardManager : MonoBehaviour {
 		cameraManager.FollowPlayer ();
 	}
 
+	public bool GetAttrXY(int x, int y) {
+		return levelMap [x, y].GetComponent<ItemManager>().GetAttr();
+	}
+
+	public void SetAttrXY(int x, int y, bool attr) {
+		levelMap [x, y].GetComponent<ItemManager> ().SetAttr (attr);
+	}
+
 	public string getPropByTag(string tag, string prop) {
 		string buf;
 		if (tag != null) {
@@ -176,6 +184,33 @@ public class BoardManager : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	public void ProcessMap() {
+		int x, y, b;
+		string tag;
+		for (y = 1; y<20; y++) { 
+			b = y-1; 
+			for (x=0; x<30; x++) {
+				tag = getTagXY(x,y);
+				if (getPropByTag(tag,"gResponds")=="yes") {
+
+					if (getTagXY(x,b)==null) {
+						if (GetAttrXY(x,y)) {moveXYtoAB(x,y,x,b);}
+						else { SetAttrXY(x,y,true);}
+					}
+
+					else if (getPropByTag(getTagXY(x,b),"fallOff")=="yes") {
+						if (x>0 && getTagXY(x-1,b)==null) {
+							PushAsBoulder(x,y,x-1,y);
+						}
+						else if (x<29 && getTagXY(x+1,b)==null) {
+							PushAsBoulder(x,y,x+1,y);
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public void SetupScene (int level) {
