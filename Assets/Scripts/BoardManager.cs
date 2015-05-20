@@ -21,11 +21,18 @@ public class BoardManager : MonoBehaviour {
 
 	private JSONNode N;
 
+	private void PlaceItem(int x, int y, string sprite) {
+		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+	}
+
 	void BoardSetup (int level)
 	{	
 		level = GameData.level - 1;
 
 		if (GameData.level==0) level = 0; //todo remove;
+
+		GameData.diamondPlaced = 0;
+		GameData.diamondsCollected = 0;
 
 		boardHolder = new GameObject ("Board").transform;
 
@@ -45,59 +52,58 @@ public class BoardManager : MonoBehaviour {
 					}break;
 					case "1": {
 						// door
-						levelMap[x,y] = Instantiate (Resources.Load(doorSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,doorSprite);
 					}break;
 					case "2": {
 						// boulder
-						levelMap[x,y] = Instantiate (Resources.Load(boulderSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,boulderSprite);
 					}break;
-					case "3": {/* player */}break;
-					case "4": {
-						
-					}break;
+					case "3": {levelMap[x,y] = null;/* player */}break;
+					case "4": {levelMap[x,y] = null;			}break;
 					case "5": {
 						// wall
-					levelMap[x,y] = Instantiate (Resources.Load(wallSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,wallSprite);
 					}break;
 					case "6": {
 						// earth
-					levelMap[x,y] = Instantiate (Resources.Load(earthSprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,earthSprite);
 					}break;
 					case "7": {
 						// diamond
-						levelMap[x,y] = Instantiate (Resources.Load("Diamond"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Diamond");
+						GameData.diamondPlaced++;
 					}break;
 					case "8": {
 						// jellyBean
-						levelMap[x,y] = Instantiate (Resources.Load("JellyBean"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"JellyBean");
 					}break;
 					case "9": {
 						// forceField
-						levelMap[x,y] = Instantiate (Resources.Load("ForceField"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"ForceField");
 					}break;
 					case "a": {
 						// gravity
-						levelMap[x,y] = Instantiate (Resources.Load("Gravity"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Gravity");
 					}break;
 					case "b": {
 						// forceField trigger
-						levelMap[x,y] = Instantiate (Resources.Load("Trigger"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Trigger");
 					}break;
 					case "c": {
 						// elixir
-						levelMap[x,y] = Instantiate (Resources.Load("Elixir"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Elixir");
 					}break;
 					case "d": {
 						// teleport
-						levelMap[x,y] = Instantiate (Resources.Load("Teleport"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Teleport");;
 					}break;
 					case "e": {
 						// bubble
-						levelMap[x,y] = Instantiate (Resources.Load("Bubble"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Bubble");
 					}break;
 					case "f": {
 						// fire
-						levelMap[x,y] = Instantiate (Resources.Load("Fire"), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
+						PlaceItem(x,y,"Fire");
 					}break;
 				}
 				if (levelMap[x,y]!=null) levelMap[x,y].transform.SetParent (boardHolder);

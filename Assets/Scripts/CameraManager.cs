@@ -17,7 +17,6 @@ public class CameraManager : MonoBehaviour {
 		if (y < 4.5f) {y = 4.5f;}
 		if (y > 13.5f) {y = 13.5f;};
 		transform.position = new Vector3 (x, y, -10f);
-
 	}
 	// Use this for initialization
 	void Start () {

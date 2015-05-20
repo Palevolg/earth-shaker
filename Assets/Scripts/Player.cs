@@ -107,7 +107,10 @@ public class Player : MonoBehaviour {
 			string otherTag = boardManager.getTagXY (X,Y);
 
 			switch (otherTag) {
-			case "door":{break;}
+			case "door":{
+				pos = transform.position;
+				}
+				break;
 			case "boulder":{
 				int A = X+(int)moveAttempt.x;
 				int B = Y;//+(int)moveAttempt.y;
@@ -145,6 +148,7 @@ public class Player : MonoBehaviour {
 			}
 			case "diamond":{
 				boardManager.destroyXY(X,Y);
+				GameData.diamondsCollected++;
 				break;
 			}
 			case "wall":{
