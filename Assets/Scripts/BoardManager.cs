@@ -227,9 +227,11 @@ public class BoardManager : MonoBehaviour {
 					else if (getPropByTag(getTagXY(x,b),"fallOff")=="yes") {
 						if (x>0 && getTagXY(x-1,b)==null && getTagXY(x-1,y)==null) {
 							PushAsBoulder(x,y,x-1,y);
+							SetAttrXY(x-1,y,true);
 						}
 						else if (x<29 && getTagXY(x+1,b)==null && getTagXY (x+1,y)==null) {
 							PushAsBoulder(x,y,x+1,y);
+							SetAttrXY(x+1,y,true);
 							x++;
 						}
 						else {
