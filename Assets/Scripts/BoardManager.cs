@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using System.Collections.Generic;
+using System.Collections;
 using SimpleJSON;
 
 public class BoardManager : MonoBehaviour {
@@ -148,12 +149,11 @@ public class BoardManager : MonoBehaviour {
 			Destroy (levelMap [x, y]);
 	}
 
-	private void MeltBoulder(GameObject boulder) {
-		if (boulder.tag == "boulder") {
-			Destroy (boulder);
-		}
+	private IEnumerator MeltBoulder(GameObject boulder){
+		boulder.GetComponent<Animator>().enabled = true;
+		yield return new WaitForSeconds (.6f); //todo get animation time
+		Destroy (boulder);
 	}
-
 
 	public void moveXYtoAB(int X, int Y, int A, int B) {
 		//move object from XY to AB
@@ -250,7 +250,7 @@ public class BoardManager : MonoBehaviour {
 			b = y - 1; 
 			for (x=0; x<30; x++) {
 				if (getTagXY(x,y) == "boulder" && getTagXY(x,b) == "fire" && !GetAttrXY(x,b)) {
-					MeltBoulder(levelMap[x,y]);
+					StartCoroutine(MeltBoulder(levelMap[x,y]));
 				}
 			}
 		}
