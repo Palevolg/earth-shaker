@@ -146,6 +146,10 @@ public class Player : MonoBehaviour {
 				boardManager.destroyXY(X,Y);
 				break;
 			}
+			case "wethellsoil": {
+				boardManager.destroyXY(X,Y);
+				break;
+			}
 			case "diamond":{
 				boardManager.destroyXY(X,Y);
 				GameData.diamondsCollected++;
