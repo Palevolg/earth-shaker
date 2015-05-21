@@ -148,11 +148,20 @@ public class BoardManager : MonoBehaviour {
 			Destroy (levelMap [x, y]);
 	}
 
+	private void MeltBoulder(GameObject boulder) {
+		if (boulder.tag == "boulder") {
+			Destroy (boulder);
+		}
+	}
+
+
 	public void moveXYtoAB(int X, int Y, int A, int B) {
 		//move object from XY to AB
 		levelMap [A, B] = levelMap [X, Y];
 		levelMap [X, Y] = null;
-		levelMap [A, B].transform.position = new Vector3 (A, B, 0f);
+		if (levelMap [A, B] != null) {
+			levelMap [A, B].transform.position = new Vector3 (A, B, 0f);
+		}
 	}
 
 	public bool PushAsBubble(int X, int Y, int A, int B) {
@@ -193,6 +202,11 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public void ProcessMap() {
+		CheckStatic ();
+		CheckFalls ();
+	}
+
+	private void CheckFalls() {
 		int x, y, b;
 		string tag;
 		for (y = 1; y<20; y++) { 
@@ -200,7 +214,7 @@ public class BoardManager : MonoBehaviour {
 			for (x=0; x<30; x++) {
 				tag = getTagXY(x,y);
 				if (getPropByTag(tag,"gResponds")=="yes") {
-
+					
 					if (getTagXY(x,b)==null) {
 						if (GetAttrXY(x,y)) {
 							moveXYtoAB(x,y,x,b);
@@ -209,19 +223,34 @@ public class BoardManager : MonoBehaviour {
 							SetAttrXY(x,y,true);
 						}
 					}
-
+					
 					else if (getPropByTag(getTagXY(x,b),"fallOff")=="yes") {
 						if (x>0 && getTagXY(x-1,b)==null && getTagXY(x-1,y)==null) {
 							PushAsBoulder(x,y,x-1,y);
 						}
-						if (x<29 && getTagXY(x+1,b)==null && getTagXY (x+1,y)==null) {
+						else if (x<29 && getTagXY(x+1,b)==null && getTagXY (x+1,y)==null) {
 							PushAsBoulder(x,y,x+1,y);
 							x++;
+						}
+						else {
+							SetAttrXY(x,y,false);
 						}
 					}
 					else {
 						SetAttrXY(x,y,false);
 					}
+				}
+			}
+		}
+	}
+
+	private void CheckStatic() {
+		int x, y, b;
+		for (y = 1; y<20; y++) { 
+			b = y - 1; 
+			for (x=0; x<30; x++) {
+				if (getTagXY(x,y) == "boulder" && getTagXY(x,b) == "fire" && !GetAttrXY(x,b)) {
+					MeltBoulder(levelMap[x,y]);
 				}
 			}
 		}
