@@ -264,14 +264,30 @@ public class BoardManager : MonoBehaviour {
 			if (getPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,0,false);}
 		}
 	}
+	private void ForceFieldRemove() {
+		int x, y;
+		for (y = 0; y<rows; y++) { 
+			for (x=0; x<cols; x++) {
+				if (getTagXY(x,y)=="forcefield") {destroyXY(x,y);}
+			}
+		}
+	}
 
 	private void CheckStatic() {
 		int x, y, b;
+		string tag;
 		for (y = 1; y<20; y++) { 
 			b = y - 1; 
 			for (x=0; x<30; x++) {
-				if (getTagXY(x,y) == "boulder" && getTagXY(x,b) == "fire" && !GetAttrXY(x,b)) {
+				tag = getTagXY(x,y);
+				if (tag == "boulder" && getTagXY(x,b) == "fire" && !GetAttrXY(x,b)) {
 					StartCoroutine(MeltBoulder(levelMap[x,y]));
+				}
+				if (getTagXY(x,b) == "trigger") {
+					if (getPropByTag(tag,"gResponds")=="yes" && GetAttrXY(x,y)) {
+						destroyXY(x,b);
+						ForceFieldRemove();
+					}
 				}
 			}
 		}
