@@ -3,7 +3,7 @@ using System.Collections;
 
 public class ItemManager : MonoBehaviour {
 
-	public bool falling;
+	private bool falling;
 
 	// Use this for initialization
 	void Start () {

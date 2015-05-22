@@ -259,6 +259,10 @@ public class BoardManager : MonoBehaviour {
 				}
 			}
 		}
+		for (x=0; x<cols; x++) { // set attribute to all items on ground — false
+			tag=getTagXY(x,0);
+			if (getPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,0,false);}
+		}
 	}
 
 	private void CheckStatic() {
