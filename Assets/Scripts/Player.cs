@@ -5,18 +5,13 @@ public class Player : MonoBehaviour {
 
 	public GameObject player;
 	public BoardManager boardManager;
-	//public Camera cameraInstance;
 	public CameraManager cameraManager;
-	private Vector2 pos;
+	Vector2 pos;
 
-	private float checkTime;
-	private float lastTime;
+	float checkTime;
+	float lastTime;
 
-	private Vector2 moveAttempt;
-
-	public void placeToXY (int x, int y) {
-
-	}
+	Vector2 moveAttempt;
 
 	// Use this for initialization
 	void Start () {
@@ -34,7 +29,6 @@ public class Player : MonoBehaviour {
 		moveAttempt.x += Input.GetAxisRaw ("Horizontal");
 		moveAttempt.y += Input.GetAxisRaw ("Vertical");
 
-
 		lastTime = Time.time;
 		if (lastTime >= checkTime) {
 			UpdatePerTact();
@@ -43,29 +37,7 @@ public class Player : MonoBehaviour {
 		
 
 	}
-	void OnTriggerEnter2D(Collider2D otherCollider)
-	{
-		// Is this a shot?
-		//GroundScript ground = otherCollider.gameObject.GetComponent<GroundScript>();
-		/*GameObject otherObject = otherCollider.gameObject;
-		string tag = otherObject.tag;*/
-		/*if (ground != null)
-		{
-			// Destroy the ground
-			Destroy(ground.gameObject); 
-			
-		}*/
-		/*switch (tag) {
-		case "earth": {
-			Destroy(otherObject);
-			break;
-		}
-		case "diamond": {
-			Destroy(otherObject);
-			break;
-		}
-		}*/
-	}
+
 	void UpdatePerTact () {
 		pos = transform.position;
 		// player move
@@ -122,30 +94,30 @@ public class Player : MonoBehaviour {
 				if (!boardManager.PushAsBoulder(X,Y,A,B)) {
 					pos = transform.position;
 				}
-				break;
 			}
+			break;
 			case "jellybean":{
 				boardManager.destroyXY(X,Y);
-				break;
 			}
+			break;
 			case "forcefield":{
 				pos = transform.position;
 				break;
 			}
 			case "trigger":{
 				pos = transform.position;
-				break;
 			}
+			break;
 			case "gravity": {
 				boardManager.destroyXY(X,Y);
 				Debug.ClearDeveloperConsole();
 				Debug.Log ("Gravity Taken");
-				break;
 			}
+			break;
 			case "elixir": {
 				boardManager.destroyXY(X,Y);
-				break;
 			}
+			break;
 			case "teleport": {
 				boardManager.destroyXY(X,Y);  //destroy current teleport
 				Vector2 newPos = boardManager.GetTeleport(); //get coordinates of new teleport
@@ -154,40 +126,40 @@ public class Player : MonoBehaviour {
 				boardManager.destroyXY(X,Y);  //destroy new teleport
 				pos.x = newPos.x;  
 				pos.y = newPos.y;
-				break;
 			}
+			break;
 			case "earth": {
 				boardManager.destroyXY(X,Y);
-				break;
 			}
+			break;
 			case "wethellsoil": {
 				boardManager.destroyXY(X,Y);
-				break;
 			}
+			break;
 			case "diamond":{
 				boardManager.destroyXY(X,Y);
 				GameData.diamondsCollected++;
 				if (GameData.diamondsCollected >= GameData.diamondPlaced) {
 					boardManager.DoorActivate();
 				}
-				break;
 			}
+			break;
 			case "wall":{
 				pos = transform.position;
-				break;
 			}
+			break;
 			case "bubble":{
 				int A = X+(int)moveAttempt.x;
 				int B = Y+(int)moveAttempt.y;
 				if (!boardManager.PushAsBubble(X,Y,A,B)) { //can we push the bubble from XY to AB ?
 					pos = transform.position;  //if can't - don't move
 				}
-				break;
 			}
+			break;
 			case "fire":{
 				//todo death
-				break;
 			}
+			break;
 			}
 			if (Input.GetKey(KeyCode.Space)) {pos=transform.position;}
 			transform.position = pos;
@@ -198,11 +170,10 @@ public class Player : MonoBehaviour {
 
 		} 
 
-		// check falling objects
-		boardManager.ProcessMap ();
+		boardManager.ProcessMap (); //check falling objects, melting boulders, triggers etc.
 	}
 
-	private void FinishLevel() {
+	void FinishLevel() {
 		Debug.Log ("Level finished!");
 	}
 
