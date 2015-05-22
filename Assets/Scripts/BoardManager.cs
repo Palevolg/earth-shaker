@@ -116,6 +116,19 @@ public class BoardManager : MonoBehaviour {
 		cameraManager.FollowPlayer ();
 	}
 
+	public Vector2 GetTeleport() {
+		int x, y;
+		for (y = 19; y>=0; y--) {
+			for (x=0; x<30; x++) {
+				if (getTagXY(x,y)=="teleport") {
+					return new Vector2(x,y);
+				}
+			}
+		}
+
+		return new Vector2 (0, 0); //todo check if no teleports
+	}
+
 	public bool GetAttrXY(int x, int y) {
 		return levelMap [x, y].GetComponent<ItemManager>().GetAttr();
 	}
