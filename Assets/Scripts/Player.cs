@@ -142,12 +142,11 @@ public class Player : MonoBehaviour {
 			case "teleport": {
 				boardManager.destroyXY(X,Y);  //destroy current teleport
 				Vector2 newPos = boardManager.GetTeleport(); //get coordinates of new teleport
-				X = (int) Mathf.Round(newPos.x);
-				Y = (int) Mathf.Round(newPos.y);
+				X = (int) newPos.x;
+				Y = (int) newPos.y;
 				boardManager.destroyXY(X,Y);  //destroy new teleport
 				pos.x = newPos.x;  
 				pos.y = newPos.y;
-
 				break;
 			}
 			case "earth": {

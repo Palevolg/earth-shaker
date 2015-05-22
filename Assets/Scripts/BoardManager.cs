@@ -118,8 +118,8 @@ public class BoardManager : MonoBehaviour {
 
 	public Vector2 GetTeleport() {
 		int x, y;
-		for (y = 19; y>=0; y--) {
-			for (x=0; x<30; x++) {
+		for (y = rows-1; y>=0; y--) {
+			for (x=0; x<cols; x++) {
 				if (getTagXY(x,y)=="teleport") {
 					return new Vector2(x,y);
 				}
@@ -159,6 +159,8 @@ public class BoardManager : MonoBehaviour {
 
 	public void destroyXY(int x, int y) {
 		if (levelMap [x, y] != null)
+			//DestroyImmediate (levelMap [x, y]);
+			levelMap[x,y].tag = "toDestroy";
 			Destroy (levelMap [x, y]);
 	}
 
