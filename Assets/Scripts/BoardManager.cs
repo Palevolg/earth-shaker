@@ -146,6 +146,14 @@ public class BoardManager : MonoBehaviour {
 		return buf;
 	}
 
+	public void DoorActivate() {
+		Debug.ClearDeveloperConsole ();
+		Debug.Log ("Door activated");
+		GameObject door = GameObject.FindWithTag("door");
+		door.GetComponent<ItemManager> ().SetAttr (true);
+		door.GetComponent<Animator> ().enabled = true;
+	}
+
 	public string getTagXY(int x, int y) {
 		if (x == player.transform.position.x && y == player.transform.position.y) {
 			return "player";

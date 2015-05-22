@@ -108,9 +108,14 @@ public class Player : MonoBehaviour {
 
 			switch (otherTag) {
 			case "door":{
+				if (boardManager.GetAttrXY(X,Y)){
+					FinishLevel();
+				}
+				else {
 				pos = transform.position;
 				}
-				break;
+			}
+			break;
 			case "boulder":{
 				int A = X+(int)moveAttempt.x;
 				int B = Y;//+(int)moveAttempt.y;
@@ -133,6 +138,8 @@ public class Player : MonoBehaviour {
 			}
 			case "gravity": {
 				boardManager.destroyXY(X,Y);
+				Debug.ClearDeveloperConsole();
+				Debug.Log ("Gravity Taken");
 				break;
 			}
 			case "elixir": {
@@ -160,6 +167,9 @@ public class Player : MonoBehaviour {
 			case "diamond":{
 				boardManager.destroyXY(X,Y);
 				GameData.diamondsCollected++;
+				if (GameData.diamondsCollected >= GameData.diamondPlaced) {
+					boardManager.DoorActivate();
+				}
 				break;
 			}
 			case "wall":{
@@ -192,10 +202,8 @@ public class Player : MonoBehaviour {
 		boardManager.ProcessMap ();
 	}
 
-}
+	private void FinishLevel() {
+		Debug.Log ("Level finished!");
+	}
 
-/*
-if (boardManager.getTagXY(x,y) == null && (pos.x != x || pos.y !=y)){		//if current cell is empty and no player here
-					string tag = boardManager.getTagXY(x,b);   //and item above is gravity responds
-					if (boardManager.getPropByTag(tag,"gResponds")=="yes") {boardManager.moveXYtoAB(x,y+1,x,y);}
-*/
+}
