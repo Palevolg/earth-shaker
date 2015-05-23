@@ -9,6 +9,8 @@ public class GameData : MonoBehaviour {
 	static public float tact = 0.1f;
 	static public int diamondsCollected;
 	static public int diamondPlaced;
+	static public int diamondRequired;
+	static public int pointsPerDiamond;
 
 	// Use this for initialization
 	void Start () {

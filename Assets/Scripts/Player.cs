@@ -6,6 +6,7 @@ public class Player : MonoBehaviour {
 	public GameObject player;
 	public BoardManager boardManager;
 	public CameraManager cameraManager;
+	public Canvas infoScreen;
 	Vector2 pos;
 
 	float checkTime;
@@ -15,12 +16,20 @@ public class Player : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		float startDelay = 2f; //todo remove fixed delay
 
 		lastTime = Time.time;
-		checkTime = lastTime + GameData.tact;
+		checkTime = lastTime + startDelay;
 
 		moveAttempt = new Vector2 (0f, 0f);
+
+		Invoke("RemoveInfo",startDelay);
+
 	
+	}
+
+	void RemoveInfo() {
+		infoScreen.enabled = false;
 	}
 	
 	// Update is called once per frame
@@ -139,7 +148,8 @@ public class Player : MonoBehaviour {
 			case "diamond":{
 				boardManager.destroyXY(X,Y);
 				GameData.diamondsCollected++;
-				if (GameData.diamondsCollected >= GameData.diamondPlaced) {
+				GameData.score+=GameData.pointsPerDiamond;
+				if (GameData.diamondsCollected >= GameData.diamondRequired) {
 					boardManager.DoorActivate();
 				}
 			}

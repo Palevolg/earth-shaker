@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections;
 using SimpleJSON;
+using UnityEngine.UI;
 
 public class BoardManager : MonoBehaviour {
 
@@ -11,6 +12,11 @@ public class BoardManager : MonoBehaviour {
 	public int lvl;
 	public GameObject player;
 	public CameraManager cameraManager;
+
+	public Text InfoLevel; 
+	public Text InfoTitle;
+	public Text InfoLives;
+	public Text InfoScore;
 
 	private Transform boardHolder;
 
@@ -26,14 +32,17 @@ public class BoardManager : MonoBehaviour {
 		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 	}
 
-	void BoardSetup (int level)
+	void BoardSetup ()
 	{	
-		level = GameData.level - 1;
+		int level = GameData.level - 1;
 
 		if (GameData.level==0) level = 0; //todo remove;
 
 		GameData.diamondPlaced = 0;
 		GameData.diamondsCollected = 0;
+
+		GameData.diamondRequired = N["levels"][level]["settings"]["diamondsRequired"].AsInt;
+		GameData.pointsPerDiamond = N["levels"][level]["settings"]["pointsPerDiamond"].AsInt;
 
 		boardHolder = new GameObject ("Board").transform;
 
@@ -272,7 +281,8 @@ public class BoardManager : MonoBehaviour {
 			if (getPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,0,false);}
 		}
 	}
-	private void ForceFieldRemove() {
+
+	void ForceFieldRemove() {
 		int x, y;
 		for (y = 0; y<rows; y++) { 
 			for (x=0; x<cols; x++) {
@@ -301,15 +311,27 @@ public class BoardManager : MonoBehaviour {
 		}
 	}
 
-	public void SetupScene (int level) {
-		BoardSetup (level);
+	void InfoSetup() {
+
+		InfoLevel.text = "LEVEL "+GameData.level.ToString("D2");
+
+		InfoTitle.text = N["levels"][GameData.level-1]["title"];
+
+		InfoLives.text = "LIVES: "+GameData.lives;
+
+		InfoScore.text = "SCORE: "+GameData.score.ToString("D6");
+	}
+
+	public void SetupScene () {
+		BoardSetup ();
 	}
 
 	// Use this for initialization
 	void Start () {
 		text = System.IO.File.ReadAllText("Assets/resources/levels.json");
 		N = JSON.Parse(text);
-		SetupScene (0);
+		InfoSetup();
+		SetupScene ();
 	}
 	
 	// Update is called once per frame
