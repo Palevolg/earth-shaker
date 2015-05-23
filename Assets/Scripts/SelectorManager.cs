@@ -18,22 +18,26 @@ public class SelectorManager : MonoBehaviour {
 	}
 
 	public void loadLevel_1 () {
-		GameData.level = 1;
-		Application.LoadLevel ("gameplay");
+		LevelStart(1);
 	}
 
 	public void loadLevel_2 () {
-		GameData.level = 2;
-		Application.LoadLevel ("gameplay");
+		LevelStart(2);
 	}
 
 	public void goToLevel () {
-		GameData.level = Mathf.RoundToInt(levelSlider.value);
-		Application.LoadLevel ("gameplay");
+		LevelStart(Mathf.RoundToInt(levelSlider.value));
 	}
 
 	public void ShowLevel () {
 		Text temp = levelButton.GetComponentInChildren<Text> ();
 		temp.text = Mathf.RoundToInt(levelSlider.value).ToString();
+	}
+
+	void LevelStart(int lvl) {
+		GameData.lives = 5;
+		GameData.score = 0;
+		GameData.level = lvl;
+		Application.LoadLevel ("gameplay");
 	}
 }

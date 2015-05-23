@@ -175,6 +175,8 @@ public class Player : MonoBehaviour {
 
 	void FinishLevel() {
 		Debug.Log ("Level finished!");
+		GameData.level++;
+		Application.LoadLevel("gameplay");
 	}
 
 }
