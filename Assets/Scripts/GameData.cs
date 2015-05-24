@@ -6,6 +6,7 @@ public class GameData : MonoBehaviour {
 	static public int level;
 	static public int score;
 	static public int lives;
+	static public int gravityTimer;
 	static public float tact = 0.1f;
 	static public int diamondsCollected;
 	static public int diamondPlaced;

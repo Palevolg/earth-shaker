@@ -119,6 +119,7 @@ public class Player : MonoBehaviour {
 			break;
 			case "gravity": {
 				boardManager.destroyXY(X,Y);
+				boardManager.GravityOff();
 				Debug.ClearDeveloperConsole();
 				Debug.Log ("Gravity Taken");
 			}
@@ -183,6 +184,8 @@ public class Player : MonoBehaviour {
 		} 
 
 		boardManager.ProcessMap (); //check falling objects, melting boulders, triggers etc.
+
+		boardManager.SetDebugText("L"+GameData.level.ToString("D2")+";  Diamonds:"+GameData.diamondsCollected.ToString("D2")+"/"+GameData.diamondRequired.ToString("D2")+";  Gravity:"+GameData.gravityTimer.ToString("D2"));
 	}
 
 	void FinishLevel() {

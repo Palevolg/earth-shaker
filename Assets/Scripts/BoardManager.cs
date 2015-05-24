@@ -18,6 +18,8 @@ public class BoardManager : MonoBehaviour {
 	public Text InfoLives;
 	public Text InfoScore;
 
+	public Text debugText;
+
 	private Transform boardHolder;
 
 	private GameObject [,] levelMap = new GameObject[30,20];
@@ -32,6 +34,10 @@ public class BoardManager : MonoBehaviour {
 		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 	}
 
+	public void SetDebugText(string str) {
+		debugText.text = str;
+	}
+
 	void BoardSetup ()
 	{	
 		int level = GameData.level - 1;
@@ -40,6 +46,7 @@ public class BoardManager : MonoBehaviour {
 
 		GameData.diamondPlaced = 0;
 		GameData.diamondsCollected = 0;
+		GameData.gravityTimer = 0;
 
 		GameData.diamondRequired = N["levels"][level]["settings"]["diamondsRequired"].AsInt;
 		GameData.pointsPerDiamond = N["levels"][level]["settings"]["pointsPerDiamond"].AsInt;
@@ -234,16 +241,35 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public void ProcessMap() {
-		CheckStatic ();
-		CheckFalls ();
+		CheckFalls();
+		if (GameData.gravityTimer>0) {
+			GameData.gravityTimer--;
+		}
+		else {
+			CheckStatic ();
+		}
+	}
+
+	public void GravityOff() {
+		GameData.gravityTimer = 100;
+		for (int y = 0; y<rows; y++){
+			for (int x = 0; x<cols; x++) {
+				if (getPropByTag(getTagXY(x,y), "gResponds")=="yes") {
+					SetAttrXY(x,y,false);
+				}
+			}
+		}
+
 	}
 
 	private void CheckFalls() {
+		bool g = (GameData.gravityTimer>0); // true if no gravity
+		int gravityGradient = (g)?-1:1;    // -1 - to fall up, +1 - down
 		int x, y, b;
 		string tag;
-		for (y = 1; y<20; y++) { 
-			b = y-1; 
-			for (x=0; x<30; x++) {
+		for (y = g?18:1; (y<20 && y>=0); y+=gravityGradient) { 
+			b = y-gravityGradient; 
+			for (x=0; x<cols; x++) {
 				tag = getTagXY(x,y);
 				if (getPropByTag(tag,"gResponds")=="yes") {
 					
@@ -276,9 +302,10 @@ public class BoardManager : MonoBehaviour {
 				}
 			}
 		}
+		y = g?19:0;
 		for (x=0; x<cols; x++) { // set attribute to all items on ground — false
-			tag=getTagXY(x,0);
-			if (getPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,0,false);}
+			tag=getTagXY(x,y);
+			if (getPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,y,false);}
 		}
 	}
 
