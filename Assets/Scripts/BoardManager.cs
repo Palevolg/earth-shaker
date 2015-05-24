@@ -193,6 +193,14 @@ public class BoardManager : MonoBehaviour {
 		yield return new WaitForSeconds (.6f); //todo get animation time
 		Destroy (boulder);
 	}
+	private IEnumerator BubbleBlow(GameObject bubble){
+		Animator anim;
+		anim = bubble.GetComponent<Animator> ();
+		anim.SetTrigger (Animator.StringToHash ("BubbleBlow"));
+		yield return new WaitForSeconds (0.6f); //todo get animation time
+		Destroy (bubble);
+	}
+
 
 	public void moveXYtoAB(int X, int Y, int A, int B) {
 		//move object from XY to AB
@@ -328,6 +336,11 @@ public class BoardManager : MonoBehaviour {
 				if (tag == "boulder" && getTagXY(x,b) == "fire" && !GetAttrXY(x,b)) {
 					StartCoroutine(MeltBoulder(levelMap[x,y]));
 				}
+				//todo: other variants, bubble from left or right from fire
+				if (tag == "bubble" && getTagXY(x,y) == "fire") {
+					StartCoroutine(BubbleBlow(levelMap[x,y]));
+				}
+
 				if (getTagXY(x,b) == "trigger") {
 					if (getPropByTag(tag,"gResponds")=="yes" && GetAttrXY(x,y)) {
 						destroyXY(x,b);
