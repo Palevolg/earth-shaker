@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f015d6848a3ddcf4d8fcb27cb69334d7
-timeCreated: 1430364202
+timeCreated: 1432500223
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -155,6 +155,16 @@ TextureImporter:
     21300296: map_door
     21300298: map_wall
     21300300: map_boulder
+    21300302: BubbleBlow_0
+    21300304: BubbleBlow_1
+    21300306: BubbleBlow_2
+    21300308: BubbleBlow_3
+    21300310: DiamondStatBar
+    21300312: LivesStatBar
+    21300314: GravityDirectStatBar
+    21300316: ColonRedStatBar
+    21300318: GravityStatBar
+    21300320: ColonCyanStatBar
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1704,6 +1714,106 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 208
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BubbleBlow_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BubbleBlow_1
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BubbleBlow_2
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: BubbleBlow_3
+      rect:
+        serializedVersion: 2
+        x: 48
+        y: 144
+        width: 16
+        height: 16
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: DiamondStatBar
+      rect:
+        serializedVersion: 2
+        x: 216
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: LivesStatBar
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: GravityDirectStatBar
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 8
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ColonRedStatBar
+      rect:
+        serializedVersion: 2
+        x: 232
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: GravityStatBar
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 0
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: ColonCyanStatBar
+      rect:
+        serializedVersion: 2
+        x: 216
         y: 0
         width: 8
         height: 8
