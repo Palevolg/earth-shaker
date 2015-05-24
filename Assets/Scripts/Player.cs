@@ -125,6 +125,8 @@ public class Player : MonoBehaviour {
 			break;
 			case "elixir": {
 				boardManager.destroyXY(X,Y);
+				GameData.lives++;
+				Debug.Log("Elexir taken. Lives: "+GameData.lives);
 			}
 			break;
 			case "teleport": {
