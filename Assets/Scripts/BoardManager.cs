@@ -363,6 +363,9 @@ public class BoardManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		var resources = ResourceManager.GetInstance(); //get Singleton
+
 		text = System.IO.File.ReadAllText("Assets/resources/levels.json");
 		N = JSON.Parse(text);
 		InfoSetup();

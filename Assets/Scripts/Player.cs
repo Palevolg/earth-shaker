@@ -25,7 +25,6 @@ public class Player : MonoBehaviour {
 
 		Invoke("RemoveInfo",startDelay);
 
-	
 	}
 
 	void RemoveInfo() {
