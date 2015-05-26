@@ -14,6 +14,8 @@ public class Player : MonoBehaviour {
 
 	Vector2 moveAttempt;
 
+	GameManager GameData = GameManager.GetInstance();
+
 	// Use this for initialization
 	void Start () {
 		float startDelay = 2f; //todo remove fixed delay

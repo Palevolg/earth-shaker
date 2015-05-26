@@ -7,6 +7,7 @@ public class SelectorManager : MonoBehaviour {
 	public Slider levelSlider;
 	public Button levelButton;
 
+	GameManager GameData = GameManager.GetInstance();
 	// Use this for initialization
 	void Start () {
 	

@@ -26,7 +26,8 @@ public class BoardManager : MonoBehaviour {
 
 	private object tempObj;
 
-	ResourceManager resources;
+	ResourceManager resources = ResourceManager.GetInstance(); //get resources Singleton
+	GameManager GameData = GameManager.GetInstance();
 
 	private void PlaceItem(int x, int y, string sprite) {
 		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
@@ -353,8 +354,6 @@ public class BoardManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		resources = ResourceManager.GetInstance(); //get Singleton
-	
 		InfoSetup();
 		SetupScene ();
 	}
