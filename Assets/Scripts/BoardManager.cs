@@ -24,11 +24,9 @@ public class BoardManager : MonoBehaviour {
 
 	private GameObject [,] levelMap = new GameObject[30,20];
 
-	private string text;
-
 	private object tempObj;
 
-	private JSONNode N;
+	ResourceManager resources;
 
 	private void PlaceItem(int x, int y, string sprite) {
 		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
@@ -48,21 +46,21 @@ public class BoardManager : MonoBehaviour {
 		GameData.diamondsCollected = 0;
 		GameData.gravityTimer = 0;
 
-		GameData.diamondRequired = N["levels"][level]["settings"]["diamondsRequired"].AsInt;
-		GameData.pointsPerDiamond = N["levels"][level]["settings"]["pointsPerDiamond"].AsInt;
+		GameData.diamondRequired = resources.GetLevelSettings(level,"diamondsRequired");
+		GameData.pointsPerDiamond = resources.GetLevelSettings(level,"pointsPerDiamond");
 
 		boardHolder = new GameObject ("Board").transform;
 
 		int a, x, y;
-		string doorSprite = "Door_"+N["levels"][level]["itemSprites"]["door"];
-		string boulderSprite = "Boulder_"+N["levels"][level]["itemSprites"]["boulder"];
-		string wallSprite = "Wall_"+N["levels"][level]["itemSprites"]["wall"];
-		string earthSprite = "Earth_"+N["levels"][level]["itemSprites"]["earth"];
+		string doorSprite = resources.GetSpriteTitle(level,"door");
+		string boulderSprite = resources.GetSpriteTitle(level,"boulder");
+		string wallSprite = resources.GetSpriteTitle(level,"wall");
+		string earthSprite = resources.GetSpriteTitle(level,"earth");
 
 		for(a = 0; a < rows; a++)	{
 			y = rows-a-1;
 			for(x = 0; x < cols; x++)	{	
-				switch (N["levels"][level]["map"][a][x]){
+				switch (resources.GetLevelItemXY(level,x,a)){
 					case "0": {
 						// empty
 						levelMap[x,y] = null;
@@ -126,9 +124,7 @@ public class BoardManager : MonoBehaviour {
 				if (levelMap[x,y]!=null) levelMap[x,y].transform.SetParent (boardHolder);
 			}
 		} // for
-		x = N["levels"][level]["player"]["x"].AsInt - 1;
-		y = 20 - N ["levels"] [level] ["player"] ["y"].AsInt;
-		player.transform.position = new Vector3(x,y,0);
+		player.transform.position = resources.GetPlayerCoords(lvl);
 		cameraManager.FollowPlayer ();
 	}
 
@@ -151,15 +147,6 @@ public class BoardManager : MonoBehaviour {
 
 	public void SetAttrXY(int x, int y, bool attr) {
 		levelMap [x, y].GetComponent<ItemManager> ().SetAttr (attr);
-	}
-
-	public string getPropByTag(string tag, string prop) {
-		string buf;
-		if (tag != null) {
-			buf = N ["itemsprop"][tag][prop];
-		} else
-			buf = null;
-		return buf;
 	}
 
 	public void DoorActivate() {
@@ -262,7 +249,7 @@ public class BoardManager : MonoBehaviour {
 		GameData.gravityTimer = 100;
 		for (int y = 0; y<rows; y++){
 			for (int x = 0; x<cols; x++) {
-				if (getPropByTag(getTagXY(x,y), "gResponds")=="yes") {
+				if (resources.GetPropByTag(getTagXY(x,y), "gResponds")=="yes") {
 					SetAttrXY(x,y,false);
 				}
 			}
@@ -279,8 +266,7 @@ public class BoardManager : MonoBehaviour {
 			b = y-gravityGradient; 
 			for (x=0; x<cols; x++) {
 				tag = getTagXY(x,y);
-				if (getPropByTag(tag,"gResponds")=="yes") {
-					
+				if (resources.GetPropByTag(tag,"gResponds")=="yes") {
 					if (getTagXY(x,b)==null) {
 						if (GetAttrXY(x,y)) {
 							moveXYtoAB(x,y,x,b);
@@ -290,7 +276,7 @@ public class BoardManager : MonoBehaviour {
 						}
 					}
 					
-					else if (getPropByTag(getTagXY(x,b),"fallOff")=="yes") {
+					else if (resources.GetPropByTag(getTagXY(x,b),"fallOff")=="yes") {
 						if (x>0 && getTagXY(x-1,b)==null && getTagXY(x-1,y)==null) {
 							PushAsBoulder(x,y,x-1,y);
 							SetAttrXY(x-1,y,true);
@@ -313,7 +299,7 @@ public class BoardManager : MonoBehaviour {
 		y = g?19:0;
 		for (x=0; x<cols; x++) { // set attribute to all items on ground — false
 			tag=getTagXY(x,y);
-			if (getPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,y,false);}
+			if (resources.GetPropByTag(tag,"gResponds")=="yes") {SetAttrXY(x,y,false);}
 		}
 	}
 
@@ -337,7 +323,7 @@ public class BoardManager : MonoBehaviour {
 					StartCoroutine(MeltBoulder(levelMap[x,y]));
 				}
 				if (getTagXY(x,b) == "trigger") {
-					if (getPropByTag(tag,"gResponds")=="yes" && GetAttrXY(x,y)) {
+					if (resources.GetPropByTag(tag,"gResponds")=="yes" && GetAttrXY(x,y)) {
 						destroyXY(x,b);
 						ForceFieldRemove();
 					}
@@ -350,7 +336,7 @@ public class BoardManager : MonoBehaviour {
 
 		InfoLevel.text = "LEVEL "+GameData.level.ToString("D2");
 
-		InfoTitle.text = N["levels"][GameData.level-1]["title"];
+		InfoTitle.text = resources.GetLevelTitle(GameData.level-1);
 
 		InfoLives.text = "LIVES: "+GameData.lives;
 
@@ -361,13 +347,14 @@ public class BoardManager : MonoBehaviour {
 		BoardSetup ();
 	}
 
+	void Awake() {
+
+	}
 	// Use this for initialization
 	void Start () {
 
-		var resources = ResourceManager.GetInstance(); //get Singleton
-
-		text = System.IO.File.ReadAllText("Assets/resources/levels.json");
-		N = JSON.Parse(text);
+		resources = ResourceManager.GetInstance(); //get Singleton
+	
 		InfoSetup();
 		SetupScene ();
 	}
