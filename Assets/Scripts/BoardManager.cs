@@ -125,7 +125,7 @@ public class BoardManager : MonoBehaviour {
 				if (levelMap[x,y]!=null) levelMap[x,y].transform.SetParent (boardHolder);
 			}
 		} // for
-		player.transform.position = resources.GetPlayerCoords(lvl);
+		player.transform.position = resources.GetPlayerCoords(level);
 		cameraManager.FollowPlayer ();
 	}
 
