@@ -171,7 +171,8 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "fire":{
-				//todo death
+				boardManager.destroyXY(X,Y);
+				Die();
 			}
 			break;
 			}
@@ -193,6 +194,18 @@ public class Player : MonoBehaviour {
 		Debug.Log ("Level finished!");
 		GameData.level++;
 		Application.LoadLevel("gameplay");
+	}
+
+	public void Die() {
+		GetComponent<Animator>().enabled = false;
+		//todo death sprite change or animation
+		if (--GameData.lives>0) {
+			Application.LoadLevel("gameplay");
+		}
+		else {
+			Debug.Log("GAME OVER");
+			Application.LoadLevel("levelSelector");
+		}
 	}
 
 }

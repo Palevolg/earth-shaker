@@ -329,6 +329,11 @@ public class BoardManager : MonoBehaviour {
 						ForceFieldRemove();
 					}
 				}
+				if (getTagXY(x,b) == "player") {
+					if (resources.GetPropByTag(tag,"gResponds")=="yes" && GetAttrXY(x,y)) {
+						player.GetComponent<Player>().Die();
+					}
+				}
 			}
 		}
 	}
