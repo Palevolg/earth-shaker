@@ -46,6 +46,7 @@ public class BoardManager : MonoBehaviour {
 		GameData.diamondPlaced = 0;
 		GameData.diamondsCollected = 0;
 		GameData.gravityTimer = 0;
+		GameData.energy = resources.energyFull;
 
 		GameData.diamondRequired = resources.GetLevelSettings(level,"diamondsRequired");
 		GameData.pointsPerDiamond = resources.GetLevelSettings(level,"pointsPerDiamond");

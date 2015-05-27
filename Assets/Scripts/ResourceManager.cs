@@ -7,6 +7,9 @@ public class ResourceManager {
 	string text;
 	JSONNode N;
 
+	public int energyPart = 125;
+	public int energyFull = 1000;
+
 	private static ResourceManager instance;
 
 	private ResourceManager(){

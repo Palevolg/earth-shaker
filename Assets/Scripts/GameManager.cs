@@ -12,6 +12,7 @@ public class GameManager {
 	public int diamondPlaced;
 	public int diamondRequired;
 	public int pointsPerDiamond;
+	public int energy;
 	
 	private static GameManager instance;
 	

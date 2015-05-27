@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 
 	Vector2 moveAttempt;
 
+	ResourceManager resources = ResourceManager.GetInstance();
 	GameManager GameData = GameManager.GetInstance();
 
 	// Use this for initialization
@@ -108,6 +109,7 @@ public class Player : MonoBehaviour {
 			break;
 			case "jellybean":{
 				boardManager.destroyXY(X,Y);
+				EnergyRefill();
 			}
 			break;
 			case "forcefield":{
@@ -183,15 +185,20 @@ public class Player : MonoBehaviour {
 			moveAttempt.x = 0;
 			moveAttempt.y = 0;
 
-		} 
+		}
+
+		if (--GameData.energy<0) {
+			Die();
+		}
 
 		boardManager.ProcessMap (); //check falling objects, melting boulders, triggers etc.
 
-		boardManager.SetDebugText("L"+GameData.level.ToString("D2")+";  Diamonds:"+GameData.diamondsCollected.ToString("D2")+"/"+GameData.diamondRequired.ToString("D2")+";  Gravity:"+GameData.gravityTimer.ToString("D2"));
+		boardManager.SetDebugText("L"+GameData.level.ToString("D2")+";  Diamonds:"+GameData.diamondsCollected.ToString("D2")+"/"+GameData.diamondRequired.ToString("D2")+";  Gravity:"+GameData.gravityTimer.ToString("D2")+"  Energy: "+GameData.energy.ToString("D4"));
 	}
 
 	void FinishLevel() {
 		Debug.Log ("Level finished!");
+		GameData.score+=GameData.energy;
 		GameData.level++;
 		Application.LoadLevel("gameplay");
 	}
@@ -206,6 +213,12 @@ public class Player : MonoBehaviour {
 			Debug.Log("GAME OVER");
 			Application.LoadLevel("levelSelector");
 		}
+	}
+
+	public void EnergyRefill() {
+		Debug.Log("Energy replaced");
+		GameData.energy+= resources.energyPart;
+		if (GameData.energy > resources.energyFull) GameData.energy = resources.energyFull;
 	}
 
 }
