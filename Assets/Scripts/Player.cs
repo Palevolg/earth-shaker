@@ -12,6 +12,8 @@ public class Player : MonoBehaviour {
 	float checkTime;
 	float lastTime;
 
+	float controlThreshold = 10f;
+
 	Vector2 moveAttempt;
 
 	ResourceManager resources = ResourceManager.GetInstance();
@@ -52,19 +54,25 @@ public class Player : MonoBehaviour {
 	void UpdatePerTact () {
 		pos = transform.position;
 		// player move
-		if (moveAttempt.x > 0) {
+		if (moveAttempt.x > controlThreshold) {
 			moveAttempt.x = 1;
 			moveAttempt.y =0;
-		}
-		if (moveAttempt.x < 0) {
+		} else if (moveAttempt.x < -controlThreshold) {
 			moveAttempt.x = -1;
 			moveAttempt.y =0;
 		}
-		if (moveAttempt.y>0) {
+		else {
+			moveAttempt.x = 0;
+		}
+
+		if (moveAttempt.y>controlThreshold) {
 			moveAttempt.y = 1;
 		}
-		if (moveAttempt.y<0) {
+		else if (moveAttempt.y<-controlThreshold) {
 			moveAttempt.y = -1;
+		}
+		else {
+			moveAttempt.y = 0;
 		}
 
 		if (moveAttempt.x != 0 || moveAttempt.y != 0) {
@@ -182,10 +190,12 @@ public class Player : MonoBehaviour {
 			transform.position = pos;
 			cameraManager.FollowPlayer();
 
-			moveAttempt.x = 0;
-			moveAttempt.y = 0;
+
 
 		}
+
+		moveAttempt.x = 0;
+		moveAttempt.y = 0;
 
 		if (--GameData.energy<0) {
 			Die();
