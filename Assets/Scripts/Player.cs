@@ -18,6 +18,7 @@ public class Player : MonoBehaviour {
 
 	ResourceManager resources = ResourceManager.GetInstance();
 	GameManager GameData = GameManager.GetInstance();
+	ProfileManager profile = ProfileManager.GetInstance();
 
 	// Use this for initialization
 	void Start () {
@@ -210,6 +211,9 @@ public class Player : MonoBehaviour {
 		Debug.Log ("Level finished!");
 		GameData.score+=GameData.energy;
 		GameData.level++;
+		if (GameData.level>profile.levelReached) {
+			profile.levelReached = GameData.level;
+		}
 		Application.LoadLevel("gameplay");
 	}
 

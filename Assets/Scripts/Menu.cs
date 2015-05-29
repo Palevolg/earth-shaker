@@ -3,9 +3,11 @@ using System.Collections;
 
 public class Menu : MonoBehaviour {
 
+	private ProfileManager profile = ProfileManager.GetInstance();
+
 	// Use this for initialization
 	void Start () {
-	
+		profile.levelReached = 1; //todo change to normal method
 	}
 	
 	// Update is called once per frame

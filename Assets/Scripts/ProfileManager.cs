@@ -4,6 +4,7 @@ using System.Collections;
 public class ProfileManager {
 	
 	string name;
+	public int levelReached;
 	
 	private static ProfileManager instance;
 	
