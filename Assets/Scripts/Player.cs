@@ -12,7 +12,7 @@ public class Player : MonoBehaviour {
 	float checkTime;
 	float lastTime;
 
-	float controlThreshold = 10f;
+	float controlThreshold = 5f;
 
 	Vector2 moveAttempt;
 
