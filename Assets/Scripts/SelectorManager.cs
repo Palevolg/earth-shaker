@@ -17,11 +17,13 @@ public class SelectorManager : MonoBehaviour {
 	void Start () {
 		int x, y, a;
 		for (int lvl=0; lvl<32; lvl++) {
-			x = (lvl%8)*100+50;
-			y = 400 - Mathf.RoundToInt(lvl/8)*100;
-			Transform tmpBtn = Instantiate(lvlBtn,new Vector3(x,-y , 0), Quaternion.identity) as Transform;
+			x = (lvl%8)*100-350;
+			y = 100-Mathf.RoundToInt(lvl/8)*100;
+			RectTransform tmpBtn = Instantiate(lvlBtn) as RectTransform;
 			tmpBtn.SetParent(UICanvas);
-			tmpBtn.transform.position = new Vector3(x,y,0);
+			tmpBtn.transform.localScale = new Vector3(1,1,1);
+			tmpBtn.transform.localPosition = new Vector3(x,y,0);
+
 			a = lvl+1;
 			tmpBtn.transform.FindChild("Text").GetComponent<Text>().text = a.ToString("D2");
 			tmpBtn.GetComponent<GoToLevel>().level = a;
