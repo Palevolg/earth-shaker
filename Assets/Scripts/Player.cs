@@ -14,7 +14,7 @@ public class Player : MonoBehaviour {
 
 	Vector2 moveAttempt;
 
-	bool keyPressedR, keyReleasedR,keyPressedL, keyReleasedL,keyPressedU, keyReleasedU,keyPressedD, keyReleasedD;
+	bool keyPressedR, keyReleasedR,keyPressedL, keyReleasedL,keyPressedU, keyReleasedU,keyPressedD, keyReleasedD, actionButton;
 
 	ResourceManager resources = ResourceManager.GetInstance();
 	GameManager GameData = GameManager.GetInstance();
@@ -67,6 +67,8 @@ public class Player : MonoBehaviour {
 
 		moveAttempt.x = 0;
 		moveAttempt.y = 0;
+
+		actionButton = Input.GetKey(KeyCode.Space);
 
 		if (Input.GetKey (KeyCode.RightArrow)) {
 			moveAttempt.x = 1;
@@ -206,12 +208,14 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "fire":{
-				boardManager.destroyXY(X,Y);
-				Die();
+				if (!actionButton) {
+					boardManager.destroyXY(X,Y);
+					Die();
+				}
 			}
 			break;
 			}
-			if (Input.GetKey(KeyCode.Space)) {pos=transform.position;}
+			if (actionButton) {pos=transform.position;}
 			transform.position = pos;
 			cameraManager.FollowPlayer();
 
