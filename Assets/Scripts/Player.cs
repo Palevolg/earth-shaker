@@ -12,9 +12,9 @@ public class Player : MonoBehaviour {
 	float checkTime;
 	float lastTime;
 
-	float controlThreshold = 5f;
-
 	Vector2 moveAttempt;
+
+	bool keyPressedR, keyReleasedR,keyPressedL, keyReleasedL,keyPressedU, keyReleasedU,keyPressedD, keyReleasedD;
 
 	ResourceManager resources = ResourceManager.GetInstance();
 	GameManager GameData = GameManager.GetInstance();
@@ -29,6 +29,11 @@ public class Player : MonoBehaviour {
 
 		moveAttempt = new Vector2 (0f, 0f);
 
+		keyPressedR = false;keyReleasedR = false;
+		keyPressedL = false;keyReleasedL = false;
+		keyPressedU = false;keyReleasedU = false;
+		keyPressedD = false;keyReleasedD = false;
+
 		Invoke("RemoveInfo",startDelay);
 
 	}
@@ -40,39 +45,58 @@ public class Player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		moveAttempt.x += Input.GetAxisRaw ("Horizontal");
-		moveAttempt.y += Input.GetAxisRaw ("Vertical");
-
 		lastTime = Time.time;
 		if (lastTime >= checkTime) {
 			UpdatePerTact();
 			checkTime = Time.time + GameData.tact;
 		}
-		
 
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {keyPressedR = true;}
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {keyPressedL = true;}
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {keyPressedU = true;}
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {keyPressedD = true;}
+
+		if (Input.GetKeyUp (KeyCode.RightArrow)) {keyReleasedR = true;}
+		if (Input.GetKeyUp (KeyCode.LeftArrow)) {keyReleasedL = true;}
+		if (Input.GetKeyUp (KeyCode.UpArrow)) {keyReleasedU = true;}
+		if (Input.GetKeyUp (KeyCode.DownArrow)) {keyReleasedD = true;}
 	}
 
 	void UpdatePerTact () {
 		pos = transform.position;
-		// player move
-		if (moveAttempt.x > controlThreshold) {
-			moveAttempt.x = 1;
-			moveAttempt.y =0;
-		} else if (moveAttempt.x < -controlThreshold) {
-			moveAttempt.x = -1;
-			moveAttempt.y =0;
-		}
-		else {
-			moveAttempt.x = 0;
-		}
 
-		if (moveAttempt.y>controlThreshold) {
+		moveAttempt.x = 0;
+		moveAttempt.y = 0;
+
+		if (Input.GetKey (KeyCode.RightArrow)) {
+			moveAttempt.x = 1;
+		} else if (keyPressedR && keyReleasedR) {
+			moveAttempt.x = 1;
+		}
+		keyPressedR = false;keyReleasedR = false;
+
+		if (Input.GetKey (KeyCode.LeftArrow)) {
+			moveAttempt.x = -1;
+		} else if (keyPressedL && keyReleasedL) {
+			moveAttempt.x = -1;
+		}
+		keyPressedL = false;keyReleasedL = false;
+
+		if (Input.GetKey (KeyCode.UpArrow)) {
+			moveAttempt.y = 1;
+		} else if (keyPressedU && keyReleasedU) {
 			moveAttempt.y = 1;
 		}
-		else if (moveAttempt.y<-controlThreshold) {
+		keyPressedU = false;keyReleasedU = false;
+
+		if (Input.GetKey (KeyCode.DownArrow)) {
+			moveAttempt.y = -1;
+		} else if (keyPressedD && keyReleasedD) {
 			moveAttempt.y = -1;
 		}
-		else {
+		keyPressedD = false;keyReleasedD = false;
+
+		if (moveAttempt.x != 0) {
 			moveAttempt.y = 0;
 		}
 
@@ -191,12 +215,7 @@ public class Player : MonoBehaviour {
 			transform.position = pos;
 			cameraManager.FollowPlayer();
 
-
-
 		}
-
-		moveAttempt.x = 0;
-		moveAttempt.y = 0;
 
 		if (--GameData.energy<0) {
 			Die();
