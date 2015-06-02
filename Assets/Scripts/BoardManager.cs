@@ -20,13 +20,14 @@ public class BoardManager : MonoBehaviour {
 
 	public Text debugText;
 
+	LoadedResources resources;
 	private Transform boardHolder;
 
 	private GameObject [,] levelMap = new GameObject[30,20];
 
 	private object tempObj;
 
-	ResourceManager resources = ResourceManager.GetInstance(); //get resources Singleton
+	//ResourceManager resources = ResourceManager.GetInstance(); //get resources Singleton
 	GameManager GameData = GameManager.GetInstance();
 
 	private void PlaceItem(int x, int y, string sprite) {
@@ -360,7 +361,7 @@ public class BoardManager : MonoBehaviour {
 	}
 	// Use this for initialization
 	void Start () {
-
+		resources = GameObject.Find ("LoadedResources").GetComponent<LoadedResources>();
 		InfoSetup();
 		SetupScene ();
 	}

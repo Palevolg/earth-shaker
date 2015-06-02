@@ -16,12 +16,13 @@ public class Player : MonoBehaviour {
 
 	bool keyPressedR, keyReleasedR,keyPressedL, keyReleasedL,keyPressedU, keyReleasedU,keyPressedD, keyReleasedD, actionButton;
 
-	ResourceManager resources = ResourceManager.GetInstance();
 	GameManager GameData = GameManager.GetInstance();
 	ProfileManager profile = ProfileManager.GetInstance();
+	LoadedResources resources;
 
 	// Use this for initialization
 	void Start () {
+		resources = GameObject.Find ("LoadedResources").GetComponent<LoadedResources>();
 		float startDelay = 2f; //todo remove fixed delay
 
 		lastTime = Time.time;
