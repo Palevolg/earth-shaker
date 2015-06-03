@@ -235,6 +235,7 @@ public class Player : MonoBehaviour {
 		Debug.Log ("Level finished!");
 		GameData.score+=GameData.energy;
 		GameData.level++;
+		PlayerPrefs.SetInt ("LevelReached", GameData.level);
 		if (GameData.level>profile.levelReached) {
 			profile.levelReached = GameData.level;
 		}
