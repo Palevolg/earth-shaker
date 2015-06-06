@@ -39,14 +39,6 @@ public class SelectorManager : MonoBehaviour {
 	
 	}
 
-	public void loadLevel_1 () {
-		LevelStart(1);
-	}
-
-	public void loadLevel_2 () {
-		LevelStart(2);
-	}
-
 	public void goToLevel () {
 		LevelStart(Mathf.RoundToInt(levelSlider.value));
 	}
@@ -61,5 +53,9 @@ public class SelectorManager : MonoBehaviour {
 		GameData.score = 0;
 		GameData.level = lvl;
 		Application.LoadLevel ("gameplay");
+	}
+
+	public void ReturnToMenu() {
+		Application.LoadLevel ("menu");
 	}
 }
