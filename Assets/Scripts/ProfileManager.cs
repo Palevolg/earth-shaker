@@ -5,7 +5,7 @@ public class ProfileManager {
 	
 	string name;
 	public int levelReached;
-	
+
 	private static ProfileManager instance;
 	
 	public static ProfileManager GetInstance() {
