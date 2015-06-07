@@ -181,11 +181,13 @@ public class BoardManager : MonoBehaviour {
 	private IEnumerator MeltBoulder(GameObject boulder){
 		boulder.tag = "wall";
 		boulder.GetComponent<Animator>().enabled = true;
+		boulder.GetComponent<ItemManager>().sfxDestroingNoPlayer();
 		yield return new WaitForSeconds (.6f); //todo get animation time
 		Destroy (boulder);
 	}
 	private IEnumerator BubbleBlow(GameObject bubble){
 		bubble.GetComponent<Animator> ().SetTrigger ("BubbleBlow");
+		bubble.GetComponent<ItemManager>().sfxDestroingNoPlayer();
 		yield return new WaitForSeconds (0.4f); //todo get animation time
 		Destroy (bubble);
 	}
