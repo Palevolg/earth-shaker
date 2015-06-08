@@ -230,8 +230,9 @@ public class Player : MonoBehaviour {
 		}
 
 		boardManager.ProcessMap (); //check falling objects, melting boulders, triggers etc.
-
-		boardManager.SetDebugText("L"+GameData.level.ToString("D2")+";  Diamonds:"+GameData.diamondsCollected.ToString("D2")+"/"+GameData.diamondRequired.ToString("D2")+";  Gravity:"+GameData.gravityTimer.ToString("D2")+"  Energy: "+GameData.energy.ToString("D4"));
+		boardManager.SetLevelText(GameData.level.ToString("D2"));
+		boardManager.SetDiamondsText(GameData.diamondRequired.ToString("D2"), GameData.diamondsCollected.ToString("D2"));
+		boardManager.SetDebugText("Gravity:"+GameData.gravityTimer.ToString("D2")+"  Energy: "+GameData.energy.ToString("D4"));
 	}
 
 	void FinishLevel() {

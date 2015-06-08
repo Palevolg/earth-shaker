@@ -19,6 +19,9 @@ public class BoardManager : MonoBehaviour {
 	public Text InfoScore;
 
 	public Text debugText;
+	public Text LevelNumberText;
+	public Text diamondsNeededText;
+	public Text diamondsCollectedText;
 
 	LoadedResources resources;
 	private Transform boardHolder;
@@ -34,6 +37,13 @@ public class BoardManager : MonoBehaviour {
 		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
 	}
 
+	public void SetLevelText(string str) {
+		LevelNumberText.text = str;
+	}
+	public void SetDiamondsText(string needed, string collected) {
+		diamondsNeededText.text = needed;
+		diamondsCollectedText.text = collected;
+	}
 	public void SetDebugText(string str) {
 		debugText.text = str;
 	}
