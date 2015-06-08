@@ -18,9 +18,12 @@ public class Player : MonoBehaviour {
 	public AudioClip clipElixir;
 	public AudioClip clipDeath;
 	public AudioClip clipGravity;
+	public AudioClip clipDoor;
+	public AudioClip clipFinish;
 
 	float checkTime;
 	float lastTime;
+	float tact;
 
 	Vector2 moveAttempt;
 
@@ -33,6 +36,7 @@ public class Player : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		resources = GameObject.Find ("LoadedResources").GetComponent<LoadedResources>();
+		tact = GameData.tact;
 		float startDelay = 2f; //todo remove fixed delay
 
 		lastTime = Time.time;
@@ -57,9 +61,9 @@ public class Player : MonoBehaviour {
 	void Update () {
 
 		lastTime = Time.time;
-		if (lastTime >= checkTime) {
+		if (lastTime >= checkTime && tact>Mathf.Epsilon) {
 			UpdatePerTact();
-			checkTime = Time.time + GameData.tact;
+			checkTime = Time.time + tact;
 		}
 
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {keyPressedR = true;}
@@ -210,6 +214,7 @@ public class Player : MonoBehaviour {
 				GameData.diamondsCollected++;
 				GameData.score+=GameData.pointsPerDiamond;
 				if (GameData.diamondsCollected >= GameData.diamondRequired) {
+					PlaySFX(clipDoor);
 					boardManager.DoorActivate();
 				}
 			}
@@ -250,26 +255,33 @@ public class Player : MonoBehaviour {
 		boardManager.SetDebugText("Gravity:"+GameData.gravityTimer.ToString("D2")+"  Energy: "+GameData.energy.ToString("D4"));
 	}
 
+	void InvokerGamePlay() {Application.LoadLevel("gameplay");}
+	void InvokerLevelSelector(){Application.LoadLevel("levelSelector");}
+
 	void FinishLevel() {
 		Debug.Log ("Level finished!");
 		GameData.score+=GameData.energy;
 		GameData.level++;
+		tact = .0f; //stop updates;
 		PlayerPrefs.SetInt ("LevelReached", GameData.level);
 		if (GameData.level>profile.levelReached) {
 			profile.levelReached = GameData.level;
 		}
-		Application.LoadLevel("gameplay");
+		PlaySFX(clipFinish);
+		Invoke("InvokerGamePlay", clipFinish.length+1.0f);
 	}
 
 	public void Die() {
 		GetComponent<Animator>().enabled = false;
+		PlaySFX(clipDeath);
+		tact = .0f; //stop updates;
 		//todo death sprite change or animation
 		if (--GameData.lives>0) {
-			Application.LoadLevel("gameplay");
+			Invoke("InvokerGamePlay", clipDeath.length+1.0f);
 		}
 		else {
 			Debug.Log("GAME OVER");
-			Application.LoadLevel("levelSelector");
+			Invoke("InvokerLevelSelector", clipDeath.length+1.0f); //todo invoke gameover
 		}
 	}
 
@@ -286,13 +298,5 @@ public class Player : MonoBehaviour {
 		ASource.volume = volume;
 		ASource.Play();
 		Destroy(soundHelper,(clipSFX.length+1.0f));
-	}
-
-	private IEnumerator MeltBoulder(GameObject boulder){
-		boulder.tag = "wall";
-		boulder.GetComponent<Animator>().enabled = true;
-		boulder.GetComponent<ItemManager>().sfxDestroingNoPlayer();
-		yield return new WaitForSeconds (.6f); //todo get animation time
-		Destroy (boulder);
 	}
 }
