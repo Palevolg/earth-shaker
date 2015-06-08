@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Player : MonoBehaviour {
 
@@ -8,6 +9,15 @@ public class Player : MonoBehaviour {
 	public CameraManager cameraManager;
 	public Canvas infoScreen;
 	Vector2 pos;
+
+	public GameObject PrefabSFX;
+
+	public AudioClip clipDiamond;
+	public AudioClip clipEnergy;
+	public AudioClip clipEarth;
+	public AudioClip clipElixir;
+	public AudioClip clipDeath;
+	public AudioClip clipGravity;
 
 	float checkTime;
 	float lastTime;
@@ -161,12 +171,14 @@ public class Player : MonoBehaviour {
 			break;
 			case "gravity": {
 				boardManager.destroyXY(X,Y);
+				PlaySFX(clipGravity);
 				boardManager.GravityOff();
 				Debug.ClearDeveloperConsole();
 				Debug.Log ("Gravity Taken");
 			}
 			break;
 			case "elixir": {
+				PlaySFX(clipElixir);
 				boardManager.destroyXY(X,Y);
 				GameData.lives++;
 				Debug.Log("Elexir taken. Lives: "+GameData.lives);
@@ -183,6 +195,7 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "earth": {
+				PlaySFX(clipEarth);
 				boardManager.destroyXY(X,Y);
 			}
 			break;
@@ -191,7 +204,9 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "diamond":{
+				PlaySFX(clipEarth);
 				boardManager.destroyXY(X,Y);
+				PlaySFX(clipDiamond);
 				GameData.diamondsCollected++;
 				GameData.score+=GameData.pointsPerDiamond;
 				if (GameData.diamondsCollected >= GameData.diamondRequired) {
@@ -259,9 +274,25 @@ public class Player : MonoBehaviour {
 	}
 
 	public void EnergyRefill() {
-		Debug.Log("Energy replaced");
+		PlaySFX(clipEnergy,.6f); //очень уж противный звук... потише
 		GameData.energy+= resources.energyPart;
 		if (GameData.energy > resources.energyFull) GameData.energy = resources.energyFull;
 	}
 
+	void PlaySFX(AudioClip clipSFX, float volume = 1.0f) {
+		GameObject soundHelper = Instantiate(PrefabSFX);
+		AudioSource ASource = soundHelper.GetComponent<AudioSource>();
+		ASource.clip = clipSFX;
+		ASource.volume = volume;
+		ASource.Play();
+		Destroy(soundHelper,(clipSFX.length+1.0f));
+	}
+
+	private IEnumerator MeltBoulder(GameObject boulder){
+		boulder.tag = "wall";
+		boulder.GetComponent<Animator>().enabled = true;
+		boulder.GetComponent<ItemManager>().sfxDestroingNoPlayer();
+		yield return new WaitForSeconds (.6f); //todo get animation time
+		Destroy (boulder);
+	}
 }
