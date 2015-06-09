@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 using System.Collections.Generic;
 using System.Collections;
@@ -24,6 +24,10 @@ public class BoardManager : MonoBehaviour {
 	public Text LevelNumberText;
 	public Text diamondsNeededText;
 	public Text diamondsCollectedText;
+	public Text livesCountText;
+	public Text gravityTimerText;
+	public Image gravityDirection;
+	public bool gravityOff;
 
 	LoadedResources resources;
 	private Transform boardHolder;
@@ -50,6 +54,17 @@ public class BoardManager : MonoBehaviour {
 		diamondsNeededText.text = needed;
 		diamondsCollectedText.text = collected;
 	}
+	public void SetLivesCountText(string str) {
+		livesCountText.text = str;
+	}
+	public void setGravityImageDirection(float direction)
+	{	
+		gravityDirection.rectTransform.Rotate(direction,0f,0f);
+	}
+	public void SetGravityTimer(string str) {
+		gravityTimerText.text = str;
+	}
+	
 	public void SetDebugText(string str) {
 		debugText.text = str;
 	}
@@ -263,6 +278,11 @@ public class BoardManager : MonoBehaviour {
 			GameData.gravityTimer--;
 		}
 		else {
+			if (gravityOff == true) 
+			{
+				gravityOff = false;
+				setGravityImageDirection(180f);
+			}	
 			CheckStatic ();
 		}
 	}

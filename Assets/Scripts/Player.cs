@@ -177,6 +177,7 @@ public class Player : MonoBehaviour {
 				boardManager.destroyXY(X,Y);
 				SFX.PlaySFX("gravity");
 				boardManager.GravityOff();
+				boardManager.setGravityImageDirection(180f);
 				Debug.ClearDeveloperConsole();
 				Debug.Log ("Gravity Taken");
 			}
@@ -251,7 +252,9 @@ public class Player : MonoBehaviour {
 		boardManager.ProcessMap (); //check falling objects, melting boulders, triggers etc.
 		boardManager.SetLevelText(GameData.level.ToString("D2"));
 		boardManager.SetDiamondsText(GameData.diamondRequired.ToString("D2"), GameData.diamondsCollected.ToString("D2"));
-		boardManager.SetDebugText("Gravity:"+GameData.gravityTimer.ToString("D2")+"  Energy: "+GameData.energy.ToString("D4"));
+		boardManager.SetLivesCountText(GameData.lives.ToString("D2"));
+		boardManager.SetGravityTimer(GameData.gravityTimer.ToString("D2"));
+		boardManager.SetDebugText("  Energy: "+GameData.energy.ToString("D4"));
 	}
 
 	void InvokerGamePlay() {Application.LoadLevel("gameplay");}
