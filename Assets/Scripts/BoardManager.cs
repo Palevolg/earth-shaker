@@ -330,6 +330,7 @@ public class BoardManager : MonoBehaviour {
 
 	void ForceFieldRemove() {
 		int x, y;
+		SFX.PlaySFX ("trigger");
 		for (y = 0; y<rows; y++) { 
 			for (x=0; x<cols; x++) {
 				if (getTagXY(x,y)=="forcefield") {destroyXY(x,y);}
