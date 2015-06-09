@@ -27,7 +27,7 @@ public class BoardManager : MonoBehaviour {
 	public Text livesCountText;
 	public Text gravityTimerText;
 	public Image gravityDirection;
-	public bool gravityOff;
+	public bool gravityOff = false;
 
 	LoadedResources resources;
 	private Transform boardHolder;

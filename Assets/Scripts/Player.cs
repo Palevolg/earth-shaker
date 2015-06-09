@@ -180,8 +180,11 @@ public class Player : MonoBehaviour {
 			case "gravity": {
 				boardManager.destroyXY(X,Y);
 				SFX.PlaySFX("gravity");
+				if (boardManager.gravityOff == false)
+				{
+					boardManager.setGravityImageDirection(180f);
+				}
 				boardManager.GravityOff();
-				boardManager.setGravityImageDirection(180f);
 				Debug.ClearDeveloperConsole();
 				Debug.Log ("Gravity Taken");
 			}
