@@ -142,6 +142,11 @@ public class Player : MonoBehaviour {
 			int Y = (int) Mathf.Round(pos.y);
 
 			string otherTag = boardManager.getTagXY (X,Y);
+			if (resources.GetPropByTag(otherTag,"pushable")=="no" && actionButton) {
+				// don't push unpushable
+				pos=transform.position;
+				otherTag=null;
+			}
 
 			switch (otherTag) {
 			case "door":{
@@ -239,13 +244,12 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "fire":{
-				if (!actionButton) {
-					boardManager.destroyXY(X,Y);
-					Die();
-				}
+				boardManager.destroyXY(X,Y);
+				Die();
 			}
 			break;
 			}
+
 			if (actionButton) {pos=transform.position;}
 			transform.position = pos;
 			cameraManager.FollowPlayer();
@@ -268,6 +272,7 @@ public class Player : MonoBehaviour {
 	void InvokerLevelSelector(){Application.LoadLevel("levelSelector");}
 
 	void FinishLevel() {
+		GetComponent<SpriteRenderer>().enabled=false; //hide player
 		Debug.Log ("Level finished!");
 		GameData.score+=GameData.energy;
 		GameData.level++;

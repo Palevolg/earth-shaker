@@ -1254,77 +1254,92 @@
     "door":{
       "gResponds":"no",
       "fallOff":"yes",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"no"
     },
     "boulder":{
       "gResponds":"yes",
       "fallOff":"yes",
-      "playerKiller":"yes"
+      "playerKiller":"yes",
+	  "pushable":"yes"
     },
     "player":{
       "gResponds":"no",
       "fallOff":"no",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"no"
     },
     "wall":{
       "gResponds":"no",
       "fallOff":"yes",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"no"
     },
     "earth":{
       "gResponds":"no",
       "fallOff":"no",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"yes"
     },
     "wethellsoil":{
       "gResponds":"yes",
       "fallOff":"no",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"yes"
     },
     "diamond":{
       "gResponds":"yes",
       "fallOff":"yes",
-      "playerKiller":"yes"
+      "playerKiller":"yes",
+	  "pushable":"yes"
     },
     "jellybean":{
       "gResponds":"yes",
       "fallOff":"yes",
-      "playerKiller":"yes"
+      "playerKiller":"yes",
+	  "pushable":"yes"
     },
     "forcefield":{
       "gResponds":"no",
       "fallOff":"yes",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"no"
     },
     "gravity":{
       "gResponds":"yes",
       "fallOff":"yes",
-      "playerKiller":"yes"
+      "playerKiller":"yes",
+	  "pushable":"yes"
     },
     "trigger":{
       "gResponds":"no",
       "fallOff":"yes",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"no"
     },
     "elixir":{
       "gResponds":"yes",
       "fallOff":"yes",
-      "playerKiller":"yes"
+      "playerKiller":"yes",
+	  "pushable":"yes"
     },
     "teleport":{
       "gResponds":"no",
       "fallOff":"yes",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"no"
     },
     "bubble":{
       "gResponds":"no",
       "fallOff":"yes",
-      "playerKiller":"no"
+      "playerKiller":"no",
+	  "pushable":"yes"
     },
     "fire":{
       "gResponds":"yes",
       "fallOff":"yes",
-      "playerKiller":"yes"
+      "playerKiller":"yes",
+	  "pushable":"no"
     }
   }
 }
