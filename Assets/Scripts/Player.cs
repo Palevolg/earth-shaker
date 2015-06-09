@@ -73,11 +73,15 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.UpArrow)) {keyReleasedU = true;}
 		if (Input.GetKeyUp (KeyCode.DownArrow)) {keyReleasedD = true;}
 
-		if (Input.GetKey (KeyCode.S)) {Die();}
 		if (Input.GetKey (KeyCode.Q)) {Application.LoadLevel("levelSelector");}
 	}
 
 	void UpdatePerTact () {
+
+		if (Input.GetKey (KeyCode.S)) {
+			tact = 0f;
+			Die();
+		}
 		pos = transform.position;
 
 		moveAttempt.x = 0;
