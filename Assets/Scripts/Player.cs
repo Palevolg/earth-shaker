@@ -11,15 +11,8 @@ public class Player : MonoBehaviour {
 	Vector2 pos;
 
 	public GameObject PrefabSFX;
-
-	public AudioClip clipDiamond;
-	public AudioClip clipEnergy;
-	public AudioClip clipEarth;
-	public AudioClip clipElixir;
-	public AudioClip clipDeath;
-	public AudioClip clipGravity;
-	public AudioClip clipDoor;
-	public AudioClip clipFinish;
+	public GameObject SFXManagerInstance;
+	SFXManager SFX;
 
 	float checkTime;
 	float lastTime;
@@ -32,6 +25,10 @@ public class Player : MonoBehaviour {
 	GameManager GameData = GameManager.GetInstance();
 	ProfileManager profile = ProfileManager.GetInstance();
 	LoadedResources resources;
+
+	void Awake () {
+		SFX = SFXManagerInstance.GetComponent<SFXManager>();
+	}
 
 	// Use this for initialization
 	void Start () {
@@ -158,6 +155,9 @@ public class Player : MonoBehaviour {
 				if (!boardManager.PushAsBoulder(X,Y,A,B)) {
 					pos = transform.position;
 				}
+				else {
+					SFX.PlaySFX("push");
+				}
 			}
 			break;
 			case "jellybean":{
@@ -175,20 +175,21 @@ public class Player : MonoBehaviour {
 			break;
 			case "gravity": {
 				boardManager.destroyXY(X,Y);
-				PlaySFX(clipGravity);
+				SFX.PlaySFX("gravity");
 				boardManager.GravityOff();
 				Debug.ClearDeveloperConsole();
 				Debug.Log ("Gravity Taken");
 			}
 			break;
 			case "elixir": {
-				PlaySFX(clipElixir);
+				SFX.PlaySFX("elixir");
 				boardManager.destroyXY(X,Y);
 				GameData.lives++;
 				Debug.Log("Elexir taken. Lives: "+GameData.lives);
 			}
 			break;
 			case "teleport": {
+				SFX.PlaySFX("teleport");
 				boardManager.destroyXY(X,Y);  //destroy current teleport
 				Vector2 newPos = boardManager.GetTeleport(); //get coordinates of new teleport
 				X = (int) newPos.x;
@@ -199,7 +200,7 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "earth": {
-				PlaySFX(clipEarth);
+				SFX.PlaySFX("earth");
 				boardManager.destroyXY(X,Y);
 			}
 			break;
@@ -208,13 +209,11 @@ public class Player : MonoBehaviour {
 			}
 			break;
 			case "diamond":{
-				PlaySFX(clipEarth);
 				boardManager.destroyXY(X,Y);
-				PlaySFX(clipDiamond);
+				SFX.PlaySFX("diamond");
 				GameData.diamondsCollected++;
 				GameData.score+=GameData.pointsPerDiamond;
 				if (GameData.diamondsCollected >= GameData.diamondRequired) {
-					PlaySFX(clipDoor);
 					boardManager.DoorActivate();
 				}
 			}
@@ -267,36 +266,27 @@ public class Player : MonoBehaviour {
 		if (GameData.level>profile.levelReached) {
 			profile.levelReached = GameData.level;
 		}
-		PlaySFX(clipFinish);
-		Invoke("InvokerGamePlay", clipFinish.length+1.0f);
+		SFX.PlaySFX("finish");
+		Invoke("InvokerGamePlay", SFX.ClipDuration("finish",1f));
 	}
 
 	public void Die() {
 		GetComponent<Animator>().enabled = false;
-		PlaySFX(clipDeath);
+		SFX.PlaySFX("death");
 		tact = .0f; //stop updates;
 		//todo death sprite change or animation
 		if (--GameData.lives>0) {
-			Invoke("InvokerGamePlay", clipDeath.length+1.0f);
+			Invoke("InvokerGamePlay", SFX.ClipDuration("death",1f));
 		}
 		else {
 			Debug.Log("GAME OVER");
-			Invoke("InvokerLevelSelector", clipDeath.length+1.0f); //todo invoke gameover
+			Invoke("InvokerLevelSelector", SFX.ClipDuration("death",1f)); //todo invoke gameover
 		}
 	}
 
 	public void EnergyRefill() {
-		PlaySFX(clipEnergy,.6f); //очень уж противный звук... потише
+		SFX.PlaySFX("energy",.6f); //очень уж противный звук... потише
 		GameData.energy+= resources.energyPart;
 		if (GameData.energy > resources.energyFull) GameData.energy = resources.energyFull;
-	}
-
-	void PlaySFX(AudioClip clipSFX, float volume = 1.0f) {
-		GameObject soundHelper = Instantiate(PrefabSFX);
-		AudioSource ASource = soundHelper.GetComponent<AudioSource>();
-		ASource.clip = clipSFX;
-		ASource.volume = volume;
-		ASource.Play();
-		Destroy(soundHelper,(clipSFX.length+1.0f));
 	}
 }

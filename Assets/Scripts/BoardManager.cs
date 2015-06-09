@@ -12,6 +12,8 @@ public class BoardManager : MonoBehaviour {
 	public int lvl;
 	public GameObject player;
 	public CameraManager cameraManager;
+	public GameObject SFXManagerInstance;
+	SFXManager SFX;
 
 	public Text InfoLevel; 
 	public Text InfoTitle;
@@ -32,6 +34,10 @@ public class BoardManager : MonoBehaviour {
 
 	//ResourceManager resources = ResourceManager.GetInstance(); //get resources Singleton
 	GameManager GameData = GameManager.GetInstance();
+
+	void Awake () {
+		SFX = SFXManagerInstance.GetComponent<SFXManager>();
+	}
 
 	private void PlaceItem(int x, int y, string sprite) {
 		levelMap[x,y] = Instantiate (Resources.Load(sprite), new Vector3 (x, y, 0f), Quaternion.identity) as GameObject;
@@ -163,8 +169,7 @@ public class BoardManager : MonoBehaviour {
 	}
 
 	public void DoorActivate() {
-		Debug.ClearDeveloperConsole ();
-		Debug.Log ("Door activated");
+		SFX.PlaySFX("doorActivated");
 		GameObject door = GameObject.FindWithTag("door");
 		door.GetComponent<ItemManager> ().SetAttr (true);
 		door.GetComponent<Animator> ().enabled = true;
@@ -218,7 +223,8 @@ public class BoardManager : MonoBehaviour {
 		}
 		switch (getTagXY (A, B)) {
 		case "earth":
-			{
+			{	
+			SFX.PlaySFX("earth");
 				destroyXY (A, B);
 				moveXYtoAB (X, Y, A, B);
 				return true;
@@ -228,7 +234,7 @@ public class BoardManager : MonoBehaviour {
 				destroyXY (A, B);
 				moveXYtoAB (X, Y, A, B);
 				StartCoroutine(BubbleBlow(levelMap[A,B]));
-				
+
 			return true;
 			}
 		case null:
@@ -286,8 +292,10 @@ public class BoardManager : MonoBehaviour {
 					if (getTagXY(x,b)==null) {
 						if (GetAttrXY(x,y)) {
 							moveXYtoAB(x,y,x,b);
+							SFX.PlaySFX("falling");
 						}
 						else {
+							//falling start
 							SetAttrXY(x,y,true);
 						}
 					}
@@ -307,6 +315,7 @@ public class BoardManager : MonoBehaviour {
 						}
 					}
 					else {
+						if (GetAttrXY(x,y)) {SFX.PlaySFX("fallen");}  //todo check if normal gravity
 						SetAttrXY(x,y,false);
 					}
 				}
@@ -368,9 +377,6 @@ public class BoardManager : MonoBehaviour {
 		BoardSetup ();
 	}
 
-	void Awake() {
-
-	}
 	// Use this for initialization
 	void Start () {
 		resources = GameObject.Find ("LoadedResources").GetComponent<LoadedResources>();
