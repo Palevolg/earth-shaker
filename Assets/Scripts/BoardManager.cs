@@ -289,6 +289,7 @@ public class BoardManager : MonoBehaviour {
 
 	public void GravityOff() {
 		GameData.gravityTimer = 100;
+		gravityOff = true;
 		for (int y = 0; y<rows; y++){
 			for (int x = 0; x<cols; x++) {
 				if (resources.GetPropByTag(getTagXY(x,y), "gResponds")=="yes") {
