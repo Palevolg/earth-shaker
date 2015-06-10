@@ -21,7 +21,7 @@ public class BoardManager : MonoBehaviour {
 	public Text InfoScore;
 
 	public Image energyWrapper;
-	public Text debugText;
+	public Text scoreText;
 	public Text LevelNumberText;
 	public Text diamondsNeededText;
 	public Text diamondsCollectedText;
@@ -66,8 +66,8 @@ public class BoardManager : MonoBehaviour {
 		gravityTimerText.text = str;
 	}
 	
-	public void SetDebugText(string str) {
-		debugText.text = str;
+	public void SetScoreText(string str) {
+		scoreText.text = str;
 	}
 
 	void BoardSetup ()

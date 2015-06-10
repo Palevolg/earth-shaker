@@ -269,7 +269,7 @@ public class Player : MonoBehaviour {
 		boardManager.SetDiamondsText(GameData.diamondRequired.ToString("D2"), GameData.diamondsCollected.ToString("D2"));
 		boardManager.SetLivesCountText(GameData.lives.ToString("D2"));
 		boardManager.SetGravityTimer(GameData.gravityTimer.ToString("D2"));
-		boardManager.SetDebugText("  Energy: "+GameData.energy.ToString("D4"));
+		boardManager.SetScoreText(GameData.score.ToString("D6"));
 	}
 
 	void InvokerGamePlay() {Application.LoadLevel("gameplay");}
