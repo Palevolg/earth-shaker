@@ -20,6 +20,7 @@ public class BoardManager : MonoBehaviour {
 	public Text InfoLives;
 	public Text InfoScore;
 
+	public Image energyWrapper;
 	public Text debugText;
 	public Text LevelNumberText;
 	public Text diamondsNeededText;
@@ -382,6 +383,10 @@ public class BoardManager : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void EnergyBarDraw (float part) {
+		energyWrapper.GetComponent<RectTransform>().sizeDelta = new Vector2(.256f*(1000-part), 6f);
 	}
 
 	void InfoSetup() {

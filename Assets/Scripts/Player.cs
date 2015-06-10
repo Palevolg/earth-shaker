@@ -262,6 +262,8 @@ public class Player : MonoBehaviour {
 			Die();
 		}
 
+		boardManager.EnergyBarDraw(GameData.energy);
+
 		boardManager.ProcessMap (); //check falling objects, melting boulders, triggers etc.
 		boardManager.SetLevelText(GameData.level.ToString("D2"));
 		boardManager.SetDiamondsText(GameData.diamondRequired.ToString("D2"), GameData.diamondsCollected.ToString("D2"));
