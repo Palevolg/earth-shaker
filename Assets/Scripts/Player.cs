@@ -8,6 +8,7 @@ public class Player : MonoBehaviour {
 	public BoardManager boardManager;
 	public CameraManager cameraManager;
 	public Canvas infoScreen;
+	public Canvas barUI;
 	Vector2 pos;
 
 	public GameObject PrefabSFX;
@@ -52,6 +53,7 @@ public class Player : MonoBehaviour {
 
 	void RemoveInfo() {
 		infoScreen.enabled = false;
+		barUI.enabled = true;
 	}
 	
 	// Update is called once per frame
