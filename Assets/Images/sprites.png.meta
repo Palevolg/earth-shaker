@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f015d6848a3ddcf4d8fcb27cb69334d7
-timeCreated: 1432500223
+timeCreated: 1433953481
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -165,6 +165,7 @@ TextureImporter:
     21300316: ColonRedStatBar
     21300318: GravityStatBar
     21300320: ColonCyanStatBar
+    21300322: uibar
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1819,6 +1820,16 @@ TextureImporter:
         height: 8
       alignment: 0
       pivot: {x: .5, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: uibar
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 144
+        width: 16
+        height: 16
+      alignment: 4
+      pivot: {x: 0, y: .5}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 
