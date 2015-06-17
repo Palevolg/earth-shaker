@@ -9,6 +9,7 @@ public class Player : MonoBehaviour {
 	public CameraManager cameraManager;
 	public Canvas infoScreen;
 	public Canvas barUI;
+	public MiniMap miniMap;
 	Vector2 pos;
 
 	public GameObject PrefabSFX;
@@ -18,6 +19,7 @@ public class Player : MonoBehaviour {
 	float checkTime;
 	float lastTime;
 	float tact;
+	int timesToShowMinimap = 1;
 
 	Vector2 moveAttempt;
 
@@ -29,6 +31,14 @@ public class Player : MonoBehaviour {
 
 	void Awake () {
 		SFX = SFXManagerInstance.GetComponent<SFXManager>();
+	}
+
+	void TimerStop() {
+		tact = 0f;
+	}
+
+	void TimerRelease() {
+		tact = GameData.tact;
 	}
 
 	// Use this for initialization
@@ -81,9 +91,14 @@ public class Player : MonoBehaviour {
 	void UpdatePerTact () {
 
 		if (Input.GetKey (KeyCode.S)) {
-			tact = 0f;
+			TimerStop();
 			Die();
 		}
+
+		if (Input.GetKey (KeyCode.F)) {
+			if (timesToShowMinimap-->0) miniMap.Show();
+		}
+
 		pos = transform.position;
 
 		moveAttempt.x = 0;
