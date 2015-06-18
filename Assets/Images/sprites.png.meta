@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f015d6848a3ddcf4d8fcb27cb69334d7
-timeCreated: 1433953481
+timeCreated: 1434600219
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -166,6 +166,7 @@ TextureImporter:
     21300318: GravityStatBar
     21300320: ColonCyanStatBar
     21300322: uibar
+    21300324: empty
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -1830,6 +1831,16 @@ TextureImporter:
         height: 16
       alignment: 4
       pivot: {x: 0, y: .5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+    - name: empty
+      rect:
+        serializedVersion: 2
+        x: 248
+        y: 0
+        width: 8
+        height: 8
+      alignment: 9
+      pivot: {x: 7.71726227, y: -.0208330154}
       border: {x: 0, y: 0, z: 0, w: 0}
   spritePackingTag: 
   userData: 

@@ -33,11 +33,11 @@ public class Player : MonoBehaviour {
 		SFX = SFXManagerInstance.GetComponent<SFXManager>();
 	}
 
-	void TimerStop() {
+	public void TimerStop() {
 		tact = 0f;
 	}
 
-	void TimerRelease() {
+	public void TimerRelease() {
 		tact = GameData.tact;
 	}
 
@@ -88,6 +88,11 @@ public class Player : MonoBehaviour {
 		if (Input.GetKey (KeyCode.Q)) {Application.LoadLevel("levelSelector");}
 	}
 
+	void HideMiniMapInvoker() {
+		miniMap.Hide();
+		TimerRelease();
+	}
+
 	void UpdatePerTact () {
 
 		if (Input.GetKey (KeyCode.S)) {
@@ -96,7 +101,12 @@ public class Player : MonoBehaviour {
 		}
 
 		if (Input.GetKey (KeyCode.F)) {
-			if (timesToShowMinimap-->0) miniMap.Show();
+			if (timesToShowMinimap-->0) {
+				TimerStop();
+				miniMap.Show();
+				SFX.PlaySFX("minimap");
+				Invoke("HideMiniMapInvoker",SFX.ClipDuration("minimap",1f));
+			}
 		}
 
 		pos = transform.position;
