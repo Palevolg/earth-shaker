@@ -17,7 +17,7 @@ public class Menu : MonoBehaviour {
 			Invoke("GoToLevelSelector", 0.0f);
 		}
 		if (Input.GetKey(KeyCode.Alpha3)) {
-			Application.Quit ();
+			Quit ();
 		}
 
 	}
@@ -25,6 +25,10 @@ public class Menu : MonoBehaviour {
 
 	public void GoToLevelSelector() {
 		Application.LoadLevel ("levelSelector");
+	}
+
+	public void Quit() {
+		Application.Quit ();
 	}
 
 
