@@ -13,9 +13,15 @@ public class Menu : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
 		if (Input.GetKey(KeyCode.Alpha1)) {
-			Invoke("GoToLevelSelector", 0.0f);
+			GoToLevelSelector();
 		}
+
+		if (Input.GetKey(KeyCode.Alpha2)) {
+			GoToOptions();
+		}
+
 		if (Input.GetKey(KeyCode.Alpha3)) {
 			Quit ();
 		}
@@ -29,6 +35,10 @@ public class Menu : MonoBehaviour {
 
 	public void Quit() {
 		Application.Quit ();
+	}
+
+	public void GoToOptions () {
+		Application.LoadLevel("keysRedefine");
 	}
 
 
