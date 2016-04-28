@@ -37,7 +37,9 @@ public class SelectorManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		if (Input.GetKeyDown (KeyCode.Escape)) {
+			ReturnToMenu ();
+		}
 	}
 
 	public void goToLevel () {
@@ -59,4 +61,5 @@ public class SelectorManager : MonoBehaviour {
 	public void ReturnToMenu() {
 		SceneManager.LoadScene ("menu");
 	}
+
 }
