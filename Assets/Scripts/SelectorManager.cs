@@ -28,7 +28,7 @@ public class SelectorManager : MonoBehaviour {
 			tmpBtn.transform.FindChild("Text").GetComponent<Text>().text = a.ToString("D2");
 			tmpBtn.GetComponent<GoToLevel>().level = a;
 			tmpBtn.GetComponent<Button>().onClick.AddListener(() => { LevelStart(tmpBtn.GetComponent<GoToLevel>().level); });
-			if (a>profile.levelReached) {
+			if (a>profile.LevelReached()) {
 				tmpBtn.GetComponent<Button>().interactable = false;
 			}
 		}

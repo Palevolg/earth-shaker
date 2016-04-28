@@ -7,8 +7,7 @@ public class Menu : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		profile.levelReached = PlayerPrefs.GetInt ("LevelReached");
-		if (profile.levelReached<1) profile.levelReached = 1; //todo change to normal method
+		profile.Load ();
 	}
 	
 	// Update is called once per frame

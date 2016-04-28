@@ -306,9 +306,8 @@ public class Player : MonoBehaviour {
 		GameData.score+=GameData.energy;
 		GameData.level++;
 		tact = .0f; //stop updates;
-		PlayerPrefs.SetInt ("LevelReached", GameData.level);
-		if (GameData.level>profile.levelReached) {
-			profile.levelReached = GameData.level;
+		if (GameData.level>profile.LevelReached()) {
+			profile.SaveLevelReached(GameData.level);
 		}
 		SFX.PlaySFX("finish");
 		Invoke("InvokerGamePlay", SFX.ClipDuration("finish",1f));
