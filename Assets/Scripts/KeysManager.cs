@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class KeysManager : MonoBehaviour {
@@ -13,10 +14,9 @@ public class KeysManager : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Escape)) {
 			BackToMenu ();
 		}
-	
 	}
 
 	public void BackToMenu () {
-		Application.LoadLevel ("menu");
+		SceneManager.LoadScene ("menu");
 	}
 }

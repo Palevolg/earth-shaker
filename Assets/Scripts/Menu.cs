@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 
 public class Menu : MonoBehaviour {
@@ -29,7 +30,7 @@ public class Menu : MonoBehaviour {
 
 
 	public void GoToLevelSelector() {
-		Application.LoadLevel ("levelSelector");
+		SceneManager.LoadScene ("levelSelector");
 	}
 
 	public void Quit() {
@@ -37,7 +38,7 @@ public class Menu : MonoBehaviour {
 	}
 
 	public void GoToOptions () {
-		Application.LoadLevel("keysRedefine");
+		SceneManager.LoadScene ("keysRedefine");
 	}
 
 

@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
 
@@ -85,7 +86,7 @@ public class Player : MonoBehaviour {
 		if (Input.GetKeyUp (KeyCode.UpArrow)) {keyReleasedU = true;}
 		if (Input.GetKeyUp (KeyCode.DownArrow)) {keyReleasedD = true;}
 
-		if (Input.GetKey (KeyCode.Q)) {Application.LoadLevel("levelSelector");}
+		if (Input.GetKey (KeyCode.Q)) {SceneManager.LoadScene("levelSelector");}
 	}
 
 	void HideMiniMapInvoker() {
@@ -297,8 +298,8 @@ public class Player : MonoBehaviour {
 		boardManager.SetScoreText(GameData.score.ToString("D6"));
 	}
 
-	void InvokerGamePlay() {Application.LoadLevel("gameplay");}
-	void InvokerLevelSelector(){Application.LoadLevel("levelSelector");}
+	void InvokerGamePlay() {SceneManager.LoadScene("gameplay");}
+	void InvokerLevelSelector(){SceneManager.LoadScene("levelSelector");}
 
 	void FinishLevel() {
 		GetComponent<SpriteRenderer>().enabled=false; //hide player

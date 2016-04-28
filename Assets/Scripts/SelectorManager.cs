@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using UnityEngine.UI;
 
@@ -52,10 +53,10 @@ public class SelectorManager : MonoBehaviour {
 		GameData.lives = 5;
 		GameData.score = 0;
 		GameData.level = lvl;
-		Application.LoadLevel ("gameplay");
+		SceneManager.LoadScene ("gameplay");
 	}
 
 	public void ReturnToMenu() {
-		Application.LoadLevel ("menu");
+		SceneManager.LoadScene ("menu");
 	}
 }
