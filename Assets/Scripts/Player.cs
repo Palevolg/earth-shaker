@@ -22,7 +22,8 @@ public class Player : MonoBehaviour {
 	float tact;
 	int timesToShowMinimap = 1;
 
-	Vector2 moveAttempt;
+	Vector2 moveAttempt,primMove,secMove;
+	char primKey, secKey;
 
 	bool keyPressedR, keyReleasedR,keyPressedL, keyReleasedL,keyPressedU, keyReleasedU,keyPressedD, keyReleasedD, actionButton;
 
@@ -66,7 +67,12 @@ public class Player : MonoBehaviour {
 		infoScreen.enabled = false;
 		barUI.enabled = true;
 	}
-	
+
+	void LastKeyUpdate (char key) {
+		secKey = primKey;
+		primKey = key;
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -76,10 +82,10 @@ public class Player : MonoBehaviour {
 			checkTime = Time.time + tact;
 		}
 
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {keyPressedR = true;}
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) {keyPressedL = true;}
-		if (Input.GetKeyDown (KeyCode.UpArrow)) {keyPressedU = true;}
-		if (Input.GetKeyDown (KeyCode.DownArrow)) {keyPressedD = true;}
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {keyPressedR = true; LastKeyUpdate ('R');}
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {keyPressedL = true; LastKeyUpdate ('L');}
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {keyPressedU = true; LastKeyUpdate ('U');}
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {keyPressedD = true; LastKeyUpdate ('D');}
 
 		if (Input.GetKeyUp (KeyCode.RightArrow)) {keyReleasedR = true;}
 		if (Input.GetKeyUp (KeyCode.LeftArrow)) {keyReleasedL = true;}
@@ -92,6 +98,140 @@ public class Player : MonoBehaviour {
 	void HideMiniMapInvoker() {
 		miniMap.Hide();
 		TimerRelease();
+	}
+
+	void TryToMove(Vector2 moveVector) {
+		pos.x += moveVector.x;
+		pos.y += moveVector.y;
+		if (pos.x < 0) {
+			pos.x = 0;
+		}
+		if (pos.x>29) {
+			pos.x = 29;
+		}
+		if (pos.y < 0) {
+			pos.y=0;
+		}
+		if (pos.y>19) {
+			pos.y = 19;
+		}
+
+		int X = (int) Mathf.Round(pos.x);
+		int Y = (int) Mathf.Round(pos.y);
+
+		string otherTag = boardManager.getTagXY (X,Y);
+		if (resources.GetPropByTag(otherTag,"pushable")=="no" && actionButton) {
+			// don't push unpushable
+			pos=transform.position;
+			otherTag=null;
+		}
+
+		switch (otherTag) {
+		case "door":{
+				if (boardManager.GetAttrXY(X,Y)){
+					FinishLevel();
+				}
+				else {
+					pos = transform.position;
+				}
+			}
+			break;
+		case "boulder":{
+				int A = X+(int)moveVector.x;
+				int B = Y;//+(int)moveAttempt.y;
+				if (!boardManager.PushAsBoulder(X,Y,A,B)) {
+					pos = transform.position;
+				}
+				else {
+					SFX.PlaySFX("push");
+				}
+			}
+			break;
+		case "jellybean":{
+				boardManager.destroyXY(X,Y);
+				EnergyRefill();
+			}
+			break;
+		case "forcefield":{
+				pos = transform.position;
+				break;
+			}
+		case "trigger":{
+				pos = transform.position;
+			}
+			break;
+		case "gravity": {
+				boardManager.destroyXY(X,Y);
+				SFX.PlaySFX("gravity");
+				if (boardManager.gravityOff == false)
+				{
+					boardManager.setGravityImageDirection(180f);
+				}
+				boardManager.GravityOff();
+				Debug.ClearDeveloperConsole();
+				Debug.Log ("Gravity Taken");
+			}
+			break;
+		case "elixir": {
+				SFX.PlaySFX("elixir");
+				boardManager.destroyXY(X,Y);
+				GameData.lives++;
+				Debug.Log("Elexir taken. Lives: "+GameData.lives);
+			}
+			break;
+		case "teleport": {
+				SFX.PlaySFX("teleport");
+				boardManager.destroyXY(X,Y);  //destroy current teleport
+				Vector2 newPos = boardManager.GetTeleport(); //get coordinates of new teleport
+				X = (int) newPos.x;
+				Y = (int) newPos.y;
+				boardManager.destroyXY(X,Y);  //destroy new teleport
+				pos.x = newPos.x;  
+				pos.y = newPos.y;
+			}
+			break;
+		case "earth": {
+				SFX.PlaySFX("earth");
+				boardManager.destroyXY(X,Y);
+			}
+			break;
+		case "wethellsoil": {
+				boardManager.destroyXY(X,Y);
+			}
+			break;
+		case "diamond":{
+				boardManager.destroyXY(X,Y);
+				SFX.PlaySFX("diamond");
+				GameData.diamondsCollected++;
+				GameData.score+=GameData.pointsPerDiamond;
+				if (GameData.diamondsCollected >= GameData.diamondRequired) {
+					boardManager.DoorActivate();
+				}
+			}
+			break;
+		case "wall":{
+				pos = transform.position;
+			}
+			break;
+		case "bubble":{
+				int A = X+(int)moveVector.x;
+				int B = Y+(int)moveVector.y;
+				if (!boardManager.PushAsBubble(X,Y,A,B)) { //can we push the bubble from XY to AB ?
+					pos = transform.position;  //if can't - don't move
+				}
+			}
+			break;
+		case "fire":{
+				boardManager.destroyXY(X,Y);
+				Die();
+			}
+			break;
+		}
+
+		if (actionButton) {pos=transform.position;}
+		transform.position = pos;
+		cameraManager.FollowPlayer();
+
 	}
 
 	void UpdatePerTact () {
@@ -150,137 +290,9 @@ public class Player : MonoBehaviour {
 		}
 
 		if (moveAttempt.x != 0 || moveAttempt.y != 0) {
+
+			TryToMove (moveAttempt);
 			//try to move
-			pos.x += moveAttempt.x;
-			pos.y += moveAttempt.y;
-			if (pos.x < 0) {
-				pos.x = 0;
-			}
-			if (pos.x>29) {
-				pos.x = 29;
-			}
-			if (pos.y < 0) {
-				pos.y=0;
-			}
-			if (pos.y>19) {
-				pos.y = 19;
-			}
-
-			int X = (int) Mathf.Round(pos.x);
-			int Y = (int) Mathf.Round(pos.y);
-
-			string otherTag = boardManager.getTagXY (X,Y);
-			if (resources.GetPropByTag(otherTag,"pushable")=="no" && actionButton) {
-				// don't push unpushable
-				pos=transform.position;
-				otherTag=null;
-			}
-
-			switch (otherTag) {
-			case "door":{
-				if (boardManager.GetAttrXY(X,Y)){
-					FinishLevel();
-				}
-				else {
-				pos = transform.position;
-				}
-			}
-			break;
-			case "boulder":{
-				int A = X+(int)moveAttempt.x;
-				int B = Y;//+(int)moveAttempt.y;
-				if (!boardManager.PushAsBoulder(X,Y,A,B)) {
-					pos = transform.position;
-				}
-				else {
-					SFX.PlaySFX("push");
-				}
-			}
-			break;
-			case "jellybean":{
-				boardManager.destroyXY(X,Y);
-				EnergyRefill();
-			}
-			break;
-			case "forcefield":{
-				pos = transform.position;
-				break;
-			}
-			case "trigger":{
-				pos = transform.position;
-			}
-			break;
-			case "gravity": {
-				boardManager.destroyXY(X,Y);
-				SFX.PlaySFX("gravity");
-				if (boardManager.gravityOff == false)
-				{
-					boardManager.setGravityImageDirection(180f);
-				}
-				boardManager.GravityOff();
-				Debug.ClearDeveloperConsole();
-				Debug.Log ("Gravity Taken");
-			}
-			break;
-			case "elixir": {
-				SFX.PlaySFX("elixir");
-				boardManager.destroyXY(X,Y);
-				GameData.lives++;
-				Debug.Log("Elexir taken. Lives: "+GameData.lives);
-			}
-			break;
-			case "teleport": {
-				SFX.PlaySFX("teleport");
-				boardManager.destroyXY(X,Y);  //destroy current teleport
-				Vector2 newPos = boardManager.GetTeleport(); //get coordinates of new teleport
-				X = (int) newPos.x;
-				Y = (int) newPos.y;
-				boardManager.destroyXY(X,Y);  //destroy new teleport
-				pos.x = newPos.x;  
-				pos.y = newPos.y;
-			}
-			break;
-			case "earth": {
-				SFX.PlaySFX("earth");
-				boardManager.destroyXY(X,Y);
-			}
-			break;
-			case "wethellsoil": {
-				boardManager.destroyXY(X,Y);
-			}
-			break;
-			case "diamond":{
-				boardManager.destroyXY(X,Y);
-				SFX.PlaySFX("diamond");
-				GameData.diamondsCollected++;
-				GameData.score+=GameData.pointsPerDiamond;
-				if (GameData.diamondsCollected >= GameData.diamondRequired) {
-					boardManager.DoorActivate();
-				}
-			}
-			break;
-			case "wall":{
-				pos = transform.position;
-			}
-			break;
-			case "bubble":{
-				int A = X+(int)moveAttempt.x;
-				int B = Y+(int)moveAttempt.y;
-				if (!boardManager.PushAsBubble(X,Y,A,B)) { //can we push the bubble from XY to AB ?
-					pos = transform.position;  //if can't - don't move
-				}
-			}
-			break;
-			case "fire":{
-				boardManager.destroyXY(X,Y);
-				Die();
-			}
-			break;
-			}
-
-			if (actionButton) {pos=transform.position;}
-			transform.position = pos;
-			cameraManager.FollowPlayer();
 
 		}
 
