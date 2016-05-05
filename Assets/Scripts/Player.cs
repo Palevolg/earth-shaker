@@ -22,10 +22,10 @@ public class Player : MonoBehaviour {
 	float tact;
 	int timesToShowMinimap = 1;
 
-	Vector2 moveAttempt,primMove,secMove;
+	Vector2 primMove,secMove;
 	char primKey, secKey;
 
-	bool keyPressedR, keyReleasedR,keyPressedL, keyReleasedL,keyPressedU, keyReleasedU,keyPressedD, keyReleasedD, actionButton;
+	bool keyReleasedR,keyReleasedL,keyReleasedU,keyReleasedD, actionButton;
 
 	GameManager GameData = GameManager.GetInstance();
 	ProfileManager profile = ProfileManager.GetInstance();
@@ -52,12 +52,12 @@ public class Player : MonoBehaviour {
 		lastTime = Time.time;
 		checkTime = lastTime + startDelay;
 
-		moveAttempt = new Vector2 (0f, 0f);
+		keyReleasedR = false;
+		keyReleasedL = false;
+		keyReleasedU = false;
+		keyReleasedD = false;
 
-		keyPressedR = false;keyReleasedR = false;
-		keyPressedL = false;keyReleasedL = false;
-		keyPressedU = false;keyReleasedU = false;
-		keyPressedD = false;keyReleasedD = false;
+		primKey = ' '; secKey = ' ';
 
 		Invoke("RemoveInfo",startDelay);
 
@@ -73,6 +73,16 @@ public class Player : MonoBehaviour {
 		primKey = key;
 	}
 
+	void LastKeyRemove (char key) {
+		if (primKey == key) {
+			primKey = secKey;
+			secKey = ' ';
+		}
+		if (secKey == key) {
+			secKey = ' ';
+		}
+	}
+
 	// Update is called once per frame
 	void Update () {
 
@@ -82,15 +92,15 @@ public class Player : MonoBehaviour {
 			checkTime = Time.time + tact;
 		}
 
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {keyPressedR = true; LastKeyUpdate ('R');}
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) {keyPressedL = true; LastKeyUpdate ('L');}
-		if (Input.GetKeyDown (KeyCode.UpArrow)) {keyPressedU = true; LastKeyUpdate ('U');}
-		if (Input.GetKeyDown (KeyCode.DownArrow)) {keyPressedD = true; LastKeyUpdate ('D');}
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {LastKeyUpdate ('R');}
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {LastKeyUpdate ('L');}
+		if (Input.GetKeyDown (KeyCode.UpArrow)) {LastKeyUpdate ('U');}
+		if (Input.GetKeyDown (KeyCode.DownArrow)) {LastKeyUpdate ('D');}
 
-		if (Input.GetKeyUp (KeyCode.RightArrow)) {keyReleasedR = true;}
-		if (Input.GetKeyUp (KeyCode.LeftArrow)) {keyReleasedL = true;}
-		if (Input.GetKeyUp (KeyCode.UpArrow)) {keyReleasedU = true;}
-		if (Input.GetKeyUp (KeyCode.DownArrow)) {keyReleasedD = true;}
+		if (Input.GetKeyUp (KeyCode.RightArrow)) {keyReleasedR = true; LastKeyRemove ('R');}
+		if (Input.GetKeyUp (KeyCode.LeftArrow)) {keyReleasedL = true; LastKeyRemove ('L');}
+		if (Input.GetKeyUp (KeyCode.UpArrow)) {keyReleasedU = true; LastKeyRemove ('U');}
+		if (Input.GetKeyUp (KeyCode.DownArrow)) {keyReleasedD = true; LastKeyRemove ('D');}
 
 		if (Input.GetKey (KeyCode.Q)) {SceneManager.LoadScene("levelSelector");}
 	}
@@ -100,7 +110,9 @@ public class Player : MonoBehaviour {
 		TimerRelease();
 	}
 
-	void TryToMove(Vector2 moveVector) {
+	bool TryToMove(Vector2 moveVector) {
+		bool result;
+		result = false;
 		pos.x += moveVector.x;
 		pos.y += moveVector.y;
 		if (pos.x < 0) {
@@ -120,6 +132,7 @@ public class Player : MonoBehaviour {
 		int Y = (int) Mathf.Round(pos.y);
 
 		string otherTag = boardManager.getTagXY (X,Y);
+
 		if (resources.GetPropByTag(otherTag,"pushable")=="no" && actionButton) {
 			// don't push unpushable
 			pos=transform.position;
@@ -130,6 +143,7 @@ public class Player : MonoBehaviour {
 		case "door":{
 				if (boardManager.GetAttrXY(X,Y)){
 					FinishLevel();
+					result = true;
 				}
 				else {
 					pos = transform.position;
@@ -144,12 +158,14 @@ public class Player : MonoBehaviour {
 				}
 				else {
 					SFX.PlaySFX("push");
+					result = true;
 				}
 			}
 			break;
 		case "jellybean":{
 				boardManager.destroyXY(X,Y);
 				EnergyRefill();
+				result = true;
 			}
 			break;
 		case "forcefield":{
@@ -168,15 +184,14 @@ public class Player : MonoBehaviour {
 					boardManager.setGravityImageDirection(180f);
 				}
 				boardManager.GravityOff();
-				Debug.ClearDeveloperConsole();
-				Debug.Log ("Gravity Taken");
+				result = true;
 			}
 			break;
 		case "elixir": {
 				SFX.PlaySFX("elixir");
 				boardManager.destroyXY(X,Y);
 				GameData.lives++;
-				Debug.Log("Elexir taken. Lives: "+GameData.lives);
+				result = true;
 			}
 			break;
 		case "teleport": {
@@ -188,15 +203,18 @@ public class Player : MonoBehaviour {
 				boardManager.destroyXY(X,Y);  //destroy new teleport
 				pos.x = newPos.x;  
 				pos.y = newPos.y;
+				result = true;
 			}
 			break;
 		case "earth": {
 				SFX.PlaySFX("earth");
 				boardManager.destroyXY(X,Y);
+				result = true;
 			}
 			break;
 		case "wethellsoil": {
 				boardManager.destroyXY(X,Y);
+				result = true;
 			}
 			break;
 		case "diamond":{
@@ -207,6 +225,7 @@ public class Player : MonoBehaviour {
 				if (GameData.diamondsCollected >= GameData.diamondRequired) {
 					boardManager.DoorActivate();
 				}
+				result = true;
 			}
 			break;
 		case "wall":{
@@ -216,14 +235,17 @@ public class Player : MonoBehaviour {
 		case "bubble":{
 				int A = X+(int)moveVector.x;
 				int B = Y+(int)moveVector.y;
-				if (!boardManager.PushAsBubble(X,Y,A,B)) { //can we push the bubble from XY to AB ?
+				if (!boardManager.PushAsBubble (X, Y, A, B)) { //can we push the bubble from XY to AB ?
 					pos = transform.position;  //if can't - don't move
+				} else {
+					result = true;
 				}
 			}
 			break;
 		case "fire":{
 				boardManager.destroyXY(X,Y);
 				Die();
+				result = true;
 			}
 			break;
 		}
@@ -232,6 +254,45 @@ public class Player : MonoBehaviour {
 		transform.position = pos;
 		cameraManager.FollowPlayer();
 
+		return result;
+	}
+
+	Vector2 DefineMoveByKey(char key, bool isPrim = false) {
+		Vector2 move;
+		move.x = 0;
+		move.y = 0;
+
+		switch (key) {
+		case 'R':
+			move.x = 1;
+			break;
+		case 'L':
+			move.x = -1;
+			break;
+		case 'U':
+			move.y = 1;
+			break;
+		case 'D':
+			move.y = -1;
+			break;
+		}
+
+		if ((isPrim) && (move.x == 0) && (move.y == 0)) {
+			if ((key == 'R') && (keyReleasedR)) {
+				move.x = 1;
+			}
+			if ((key == 'L') && (keyReleasedL)) {
+				move.x = -1;
+			}
+			if ((key == 'U') && (keyReleasedU)) {
+				move.y = 1;
+			}
+			if ((key == 'D') && (keyReleasedD)) {
+				move.y = -1;
+			}
+		}
+
+		return move;
 	}
 
 	void UpdatePerTact () {
@@ -252,49 +313,14 @@ public class Player : MonoBehaviour {
 
 		pos = transform.position;
 
-		moveAttempt.x = 0;
-		moveAttempt.y = 0;
-
 		actionButton = Input.GetKey(KeyCode.Space);
 
-		if (Input.GetKey (KeyCode.RightArrow)) {
-			moveAttempt.x = 1;
-		} else if (keyPressedR && keyReleasedR) {
-			moveAttempt.x = 1;
-		}
-		keyPressedR = false;keyReleasedR = false;
+		primMove = DefineMoveByKey (primKey, true);
+		secMove = DefineMoveByKey (secKey);
 
-		if (Input.GetKey (KeyCode.LeftArrow)) {
-			moveAttempt.x = -1;
-		} else if (keyPressedL && keyReleasedL) {
-			moveAttempt.x = -1;
-		}
-		keyPressedL = false;keyReleasedL = false;
 
-		if (Input.GetKey (KeyCode.UpArrow)) {
-			moveAttempt.y = 1;
-		} else if (keyPressedU && keyReleasedU) {
-			moveAttempt.y = 1;
-		}
-		keyPressedU = false;keyReleasedU = false;
-
-		if (Input.GetKey (KeyCode.DownArrow)) {
-			moveAttempt.y = -1;
-		} else if (keyPressedD && keyReleasedD) {
-			moveAttempt.y = -1;
-		}
-		keyPressedD = false;keyReleasedD = false;
-
-		if (moveAttempt.x != 0) {
-			moveAttempt.y = 0;
-		}
-
-		if (moveAttempt.x != 0 || moveAttempt.y != 0) {
-
-			TryToMove (moveAttempt);
+		if (!TryToMove (primMove)) TryToMove(secMove);
 			//try to move
-
-		}
 
 		if (--GameData.energy<0) {
 			Die();
